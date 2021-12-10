@@ -1,8 +1,413 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = ""; // Nothing, as the landing page is unique
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Flocon - The transparent electronic signature system</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="~/img/favicon.png" rel="icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="~/lib/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="~/lib/fontawesome-5.15.1/css/all.css" rel="stylesheet" />
+  <link href="~/lib/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="~/lib/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="~/lib/remixicon/remixicon.css" rel="stylesheet">
+  <link href="~/lib/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="~/css/landing.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <h1 class="logo">
+        <i class="fas fa-snowflake" width="30px"></i>
+        Flocon<span>.io</span>
+      </h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="#tech">Tech</a></li>
+          <li><a class="nav-link scrollto" href="#faq">F.A.Q</a></li>
+          <li><a class="nav-link scrollto" href="#team">Team</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
+    <div class="hero-container">
+      <h3>Welcome to <strong>Flocon<span style="color: #D4674C;">.io</span></strong></h3>
+      <h1>Electronic signature, made transparent</h1>
+      <h2>Keep control of your document electronic signatures with the blockchain</h2>
+      <a href="#about" class="btn-get-started scrollto">Get Started</a>
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>About</h2>
+          <h3>Learn More <span>About Us</span></h3>
+          <p></p>
+        </div>
+
+        <div class="row content">
+          <div class="col-lg-6">
+            <p>
+              Flocon is a transparent digital signature system that ensures <b>provable, auditable and secure</b> document electronic signatures.</p>
+              <p>It relies on an open blockchain technology to store documents data, authenticate signatories and prove signatures. With all these assets, Flocon guarantees the highest level of reliability and transparency on the market.
+            </p>
+            <a href="index.html#tech" class="btn-learn-more">Learn More</a>
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0">
+            <p>
+              We distinguish ourselves from other electronic signatures systems :
+            </p>
+            <ul>
+              <li><i class="ri-check-double-line"></i> <b>Security</b> : we ensure signatories authentication and signature information with the highest level of security</li>
+              <li><i class="ri-check-double-line"></i> <b>Auditability</b> : transactions in the blockchain prove the document signature information, without the need of third parties (not even us!)</li>
+              <li><i class="ri-check-double-line"></i> <b>Reliability</b> : Signature information is securely stored forever, and cannot be hacked, altered or deleted</li>
+            </ul>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+
+          <div class="col-lg-4 col-md-6">
+            <img src="assets/img/portfolio/AVAX.jpg" class="img-fluid" alt="">
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <img src="assets/img/portfolio/Hack.png" class="img-fluid" alt="">
+          </div>
+
+          <div class="col-lg-4 col-md-6">
+            <img src="assets/img/portfolio/AVAX_Hack.png" class="img-fluid" alt="">
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="tech" class="services">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Technology</h2>
+          <h3>We rely on disruptive <span>Technology</span></h3>
+          <p>Flocon relies on <a href="https://www.avax.network/">Avalanche</a>, an open blockchain that is both reliable, transparent, and independant from us. This cutting-edge technology provides many benefits.</p>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+            <div class="icon-box">
+              <div class="icon"><i class='bx bx-link'></i></div>
+              <h4 class="title"><a href="">Unforgeable</a></h4>
+              <p class="description">We rely on the blockchain for signatories authentication, document information storage and proof-of-signature. All signatures are thus guaranteed unforgeable.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+            <div class="icon-box">
+              <div class="icon"><i class='bx bx-search-alt'></i></div>
+              <h4 class="title"><a href="">Auditable</a></h4>
+              <p class="description">Avalanche is open and can be audited independantly from us. All signature information is stored as transactions, that can be verified at any time with full transparency.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+            <div class="icon-box">
+              <div class="icon"><i class='bx bx-shield-quarter' ></i></div>
+              <h4 class="title"><a href="">Secure</a></h4>
+              <p class="description">The distributed and acephalous nature of the blockchain ensures that all information stored in it will remain forever and cannot be altered nor deleted.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+            <div class="icon-box">
+              <div class="icon"><i class='bx bx-door-open'></i></div>
+              <h4 class="title"><a href="">Open</a></h4>
+              <p class="description">All the software and smart contracts we develop are open and verifiable by anyone, without the need of our consent. Anyone can also propose improvements.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Services Section -->
+
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+      <div class="container">
+
+        <div class="text-center">
+          <h3>Subscribe to our newsletter</h3>
+          <p> Get the latest news, features and offers, directly in your mail box. But do not worry, we respect your privacy and your time, and send no more than one mail a month.</p>
+          <form style="align: center;" action="" method="post">
+              <input type="email" name="email"><input type="submit" value="Subscribe">
+            </form>
+
+        </div>
+
+      </div>
+    </section><!-- End Cta Section -->
+
+    <!-- ======= F.A.Q Section ======= -->
+    <section id="faq" class="faq">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>F.A.Q</h2>
+          <h3>Frequently Asked <span>Questions</span></h3>
+        </div>
+
+        <ul class="faq-list">
+
+          <li>
+            <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">Non consectetur a erat nam at lectus urna duis? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq1" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq2" class="collapsed question">Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq2" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq3" class="collapsed question">Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq3" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq4" class="collapsed question">Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq4" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq5" class="collapsed question">Tempus quam pellentesque nec nam aliquam sem et tortor consequat? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq5" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
+              </p>
+            </div>
+          </li>
+
+          <li>
+            <div data-bs-toggle="collapse" href="#faq6" class="collapsed question">Tortor vitae purus faucibus ornare. Varius vel pharetra vel turpis nunc eget lorem dolor? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+            <div id="faq6" class="collapse" data-bs-parent=".faq-list">
+              <p>
+                Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis tellus in metus vulputate eu scelerisque. Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus. Nibh tellus molestie nunc non blandit massa enim nec.
+              </p>
+            </div>
+          </li>
+
+        </ul>
+
+      </div>
+    </section><!-- End F.A.Q Section -->
+
+    <!-- ======= Team Section ======= -->
+    <section id="team" class="team">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Team</h2>
+          <h3>Our Hardworking <span>Team</span></h3>
+          <p>We at Flocon are a team of passionate software developers, that does its best to bring you the best possible service.</p>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+            <div class="member">
+              <div class="member-img">
+                <img src="~/img/team/Julien-Beaudaux.jpg" class="img-fluid" alt="">
+                <div class="social">
+                  <a href="https://github.com/JBeaudaux"><i class='bx bxl-github' ></i></a>
+                  <a href="https://www.linkedin.com/in/jbeaudaux/"><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+              <div class="member-info">
+                <h4>Julien Beaudaux, Ph.D.</h4>
+                <span>QA manager & software engineer</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+            <div class="member">
+              <div class="member-img">
+                <img src="~/img/team/Valentin-Besse.jpg" class="img-fluid" alt="">
+                <div class="social">
+                  <a href="https://github.com/valentinbesse"><i class='bx bxl-github' ></i></a>
+                  <a href="https://www.linkedin.com/in/valentin-besse/"><i class="bi bi-linkedin"></i></a>
+                </div>
+              </div>
+              <div class="member-info">
+                <h4>Valentin Besse, Ph.D.</h4>
+                <span>Senior Software developer & DevOps</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Team Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Contact</h2>
+          <h3>Contact <span>Us</span></h3>
+        </div>
+
+        <div>
+
+          <iframe width="100%" height="270px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=-14.370117187500002%2C38.30714902947769%2C26.762695312500004%2C57.350215797985626&amp;layer=mapnik&amp;marker=48.71993471159549%2C6.1962890625" style="border: 1px solid black"></iframe>
+        </div>
+
+        <div class="row mt-5">
+
+          <div class="col-lg-4">
+            <div class="info">
+              <div class="address">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Location:</h4>
+                <p>Nancy, Lorraine, France</p>
+              </div>
+
+              <div class="email">
+                <i class="bi bi-envelope"></i>
+                <h4>Email:</h4>
+                <p>info@example.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-phone"></i>
+                <h4>Call:</h4>
+                <p>+1 5589 55488 55s</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-8 mt-5 mt-lg-0">
+
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+              </div>
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="message" rows="5" placeholder="Message" required></textarea>
+              </div>
+              <div class="my-3">
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your message has been sent. Thank you!</div>
+              </div>
+              <div class="text-center"><button type="submit">Send Message</button></div>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="container d-md-flex py-4">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Flocon.io </span></strong>. All Rights Reserved
+        </div>
+      </div>
+      <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="~/lib/glightbox/js/glightbox.min.js"></script>
+  <script src="~/lib/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="~/lib/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="~/js/landing.js"></script>
+
+</body>
+
+</html>
