@@ -1,6 +1,4 @@
-﻿using Flocon.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Flocon.Controllers
 {

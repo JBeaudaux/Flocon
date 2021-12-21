@@ -1,0 +1,66 @@
+﻿@model Flocon.Models.AdminPanel.IndexViewModel
+
+@{
+    Layout = "_AdminPanel";
+    ViewData["Title"] = "Admin panel";
+}
+
+<div class="row mt">
+    <div class="col-lg-12">
+        <div class="row content-panel">
+            <div class="col-md-8 profile-text centered">
+                <h3>@Model.NewCompany.CompanyName</h3>
+                <h6>@Model.NewCompany.BusinessField</h6>
+                <p>@Model.NewCompany.Description</p>
+
+                <!-- ToDo : Manage licences activated or not -->
+                <button class="btn btn-info" type="button" disabled><i class='bx bx-rotate-right'></i> Trial licence</button>
+                <button class="btn btn-primary" type="button" disabled><i class='bx bx-star'></i> Yearly licence</button>
+                <button class="btn btn-danger" type="button"><i class='bx bx-trash'></i> Delete company</button>
+            </div>
+
+            <div class="col-md-4 centered">
+                <div class="profile-pic">
+                    @if (string.IsNullOrEmpty(Model.NewCompany.LogoPath))
+                    { <p><img src="~/img/unknown-user.png" class="img-circle"></p> }
+                    else
+                    { <p><img src="~/img/companies/@Model.NewCompany.LogoPath" class="img-circle"></p> }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 mt">
+        <div class="row content-panel">
+            <div class="panel-heading">
+                <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#pills-overview" type="button" role="tab"
+                                aria-controls="pills-overview" aria-selected="true">
+                            Overview
+                        </button>
+                    </li>
+                    
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-editprofile" type="button" role="tab"
+                                aria-controls="pills-editprofile" aria-selected="false">
+                            Edit profile
+                        </button>
+                    </li>
+                </ul>
+
+            </div>
+            
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-overview" role="tabpanel" aria-labelledby="pills-overview-tab">
+                    ...1
+                </div>
+                
+                <div class="tab-pane fade" id="pills-editprofile" role="tabpanel" aria-labelledby="pills-editprofile-tab">
+                  ...2
+                </div>
+            </div>
+              
+        </div>
+    </div>
+</div>

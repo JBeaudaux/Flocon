@@ -6,11 +6,11 @@ using Microsoft.Extensions.Options;
 var builder = WebApplication.CreateBuilder(args);
 
 // Set the Mongo Database and add DB services
-var DBsettings = builder.Configuration.GetSection(nameof(FloconDatabaseSettings));
-builder.Services.Configure<FloconDatabaseSettings>(DBsettings);
-builder.Services.AddSingleton<FloconDatabaseSettings>(sp =>
-    sp.GetRequiredService<IOptions<FloconDatabaseSettings>>().Value);
-//builder.Services.AddSingleton<UsersService>();
+var DBsettings = builder.Configuration.GetSection(nameof(FloconDbSettings));
+builder.Services.Configure<FloconDbSettings>(DBsettings);
+builder.Services.AddSingleton<IFloconDbSettings>(sp =>
+    sp.GetRequiredService<IOptions<FloconDbSettings>>().Value);
+builder.Services.AddSingleton<CustomersService>();
 
 
 // Manage identities
