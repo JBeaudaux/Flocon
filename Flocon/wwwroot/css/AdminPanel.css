@@ -20,6 +20,10 @@ h1, h2, h3, h4, h5, h6 {
     font-family: "Nunito", sans-serif;
 }
 
+.row .form-group {
+    margin-bottom: 20px;
+}
+
 
 /*--------------------------------------------------------------
 # Back to top button
@@ -438,7 +442,7 @@ ul li {
 }
 
 .modal-title {
-    color: #67727E;
+    color: white;
 }
 
 .btn-round {
@@ -2464,13 +2468,14 @@ label {
 
 .add-on {
     float: right;
-    margin-top: -37px;
+    margin-top: -40px;
+    margin-right: -2px;
     padding: 3px;
     text-align: center;
 }
 
     .add-on .btn {
-        height: 34px;
+        height: 37px;
     }
 
 /* TOGGLE CONFIGURATION */

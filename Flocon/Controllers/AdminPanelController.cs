@@ -66,7 +66,7 @@ namespace Flocon.Controllers
             cmp.Groups = new List<string>();
             cmp.CreatedOn = DateTime.Now;
             cmp.LicenceExpiry = DateTime.Now;
-            var res = await _customersService.CreateCompany(cmp);
+            await _customersService.CreateCompany(cmp);
 
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = cmp.Id });
         }
@@ -76,6 +76,15 @@ namespace Flocon.Controllers
         {
             await _customersService.DeleteCompany(id);
             return RedirectToAction("Index", "AdminPanel");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateCompany(IndexViewModel vm)
+        {
+            string cmpId = vm.NewCompany.Id;
+            //vm.NewCompany.Id = "";
+            await _customersService.UpdateAsset(cmpId, vm.NewCompany);
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = cmpId });
         }
 
 
