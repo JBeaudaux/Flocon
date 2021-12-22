@@ -68,7 +68,7 @@
                           </div>
                           <div class="col-sm-4">
                             <h1><i class='bx bx-calendar-star'></i></h1>
-                            <h3>@((int) (DateTime.Now - Model.NewCompany.LicenceExpiry).TotalDays)</h3>
+                            <h3>@((int) (Model.NewCompany.LicenceExpiry - DateTime.Now).TotalDays)</h3>
                             <h6>DAYS LEFT</h6>
                           </div>
                         </div>
@@ -272,16 +272,20 @@
                             }
                             else
                             {
-                                <button class="col-lg-5 btn btn-theme02" type="button" 
-                                        asp-controller="AdminPanel" asp-action="TrialLicence" asp-route-id="@Model.NewCompany.Id">
-                                    <i class='bx bx-rotate-right'></i> Trial licence
-                                </button>
+                                <a class="col-lg-5" asp-controller="AdminPanel" asp-action="RenewLicenceTrial" asp-route-id="@Model.NewCompany.Id">
+                                    <button class="btn btn-theme02" style="width: 100%" type="button" alt="Set trial licence (1 month)">
+                                        <i class='bx bx-rotate-right'></i> Trial licence
+                                    </button>
+                                </a>
+                                
                             }
                             <div class="col-lg-2"></div>
-                            <button class="col-lg-5 btn btn-theme" type="button"
-                                    asp-controller="AdminPanel" asp-action="YealyLicence" asp-route-id="@Model.NewCompany.Id">
-                                <i class='bx bx-star'></i> Yearly licence
-                            </button>
+
+                            <a class="col-lg-5" asp-controller="AdminPanel" asp-action="RenewLicenceYearly" asp-route-id="@Model.NewCompany.Id">
+                                <button class="btn btn-theme" style="width: 100%" type="button" alt="Set yearly licence (12 month)">
+                                    <i class='bx bx-star'></i> Yearly licence
+                                </button>
+                            </a>
                             
                         </div>
                       </div>

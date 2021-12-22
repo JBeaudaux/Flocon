@@ -87,6 +87,27 @@ namespace Flocon.Controllers
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = cmpId });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> RenewLicenceTrial(string id)
+        {
+            //vm.NewCompany.Id = "";
+            var cmp = _customersService.GetCompany(id);
+            cmp.LicenceExpiry = DateTime.Now.AddMonths(1);
+            await _customersService.UpdateAsset(id, cmp);
+
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> RenewLicenceYearly(string id)
+        {
+            //vm.NewCompany.Id = "";
+            var cmp = _customersService.GetCompany(id);
+            cmp.LicenceExpiry = DateTime.Now.AddMonths(12);
+            await _customersService.UpdateAsset(id, cmp);
+
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
+        }
 
         /*
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
