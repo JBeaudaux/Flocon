@@ -1,4 +1,5 @@
 ﻿using AspNetCore.Identity.Mongo.Model;
+using Flocon.Mailing;
 using Flocon.Models;
 using Flocon.Models.AdminPanel;
 using Microsoft.AspNetCore.Identity;
@@ -12,16 +13,19 @@ namespace Flocon.Controllers
         private readonly UserManager<UserFlocon> _userManager;
         private readonly RoleManager<MongoRole> _roleManager;
         private readonly CustomersService _customersService;
+        private readonly IEmailSender _emailSender;
         private readonly ILogger<HomeController> _logger;
 
         public AdminPanelController(UserManager<UserFlocon> userManager,
                                     RoleManager<MongoRole> roleManager,
                                     CustomersService customersService,
+                                    IEmailSender emailSender,
                                     ILogger<HomeController> logger)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _customersService = customersService;
+            _emailSender = emailSender;
             _logger = logger;
         }
 
@@ -68,6 +72,28 @@ namespace Flocon.Controllers
             cmp.LicenceExpiry = DateTime.Now;
             await _customersService.CreateCompany(cmp);
 
+            // Create one super-user wuth contact mail
+            var myUser = new UserFlocon { UserName = vm.NewCompany.CompanyName, Email = vm.NewCompany.ContactMail, CompanyId = vm.NewCompany.Id};
+            var pwd = GetRandomPassword();
+            var resCreate = _userManager.CreateAsync(myUser, pwd).Result;
+
+            if (resCreate.Succeeded)
+            {
+                var resRole = _userManager.AddToRoleAsync(myUser, "Superuser").Result;
+                _logger.LogInformation(String.Format("Super User created for company {0} :: UserId={1} :: CompanyId={2} :: RoleAssignation={3}",
+                                       vm.NewCompany.CompanyName, myUser.Id, vm.NewCompany.Id, resRole.ToString()));
+
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(myUser);
+                await _emailSender.SendRegisterEmailAsync(myUser.Email, "Admin", vm.NewCompany.CompanyName, pwd, "http://flocon.io");
+                // ToDo : Send "real" confirmation link when merged with login
+                // var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
+
+            }
+            else
+            {
+                _logger.LogInformation(String.Format("Failed registration for company {0} :: CompanyId={1}", vm.NewCompany.CompanyName, vm.NewCompany.Id));
+            }
+
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = cmp.Id });
         }
 
@@ -107,6 +133,49 @@ namespace Flocon.Controllers
             await _customersService.UpdateAsset(id, cmp);
 
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
+        }
+
+        // ToDo : Move to a "common" library
+        /// <summary>
+        /// Builds a random password for new users. Has 12 characters (3 upper case letters, 3 lower case letters, 3 digits, and 3 special characters)
+        /// </summary>
+        /// <param name="length">Length of the password</param>
+        /// <returns></returns>
+        public static string GetRandomPassword()
+        {
+            var length = 12;
+            string validLettersUp = "ABCDEFGHJKLMNOPQRSTUVWXYZ";
+            string validLettersDown = "abcdefghijklmnopqrstuvwxyz";
+            string validDigits = "0123456789";
+            string validSpecial = "!@#$%^&*?_-";
+
+            Random random = new Random();
+
+            char[] chars = new char[length];
+            for (int i = 0; i < length; i++)
+            {
+                if (i < 3)
+                {
+                    chars[i] = validLettersUp[random.Next(0, validLettersUp.Length)];
+                }
+                else if (i < 6)
+                {
+                    chars[i] = validLettersDown[random.Next(0, validLettersDown.Length)];
+                }
+                else if (i < 9)
+                {
+                    chars[i] = validDigits[random.Next(0, validDigits.Length)];
+                }
+                else
+                {
+                    chars[i] = validSpecial[random.Next(0, validSpecial.Length)];
+                }
+            }
+
+            string pwdChars = new string(chars);
+            string rand = new string(pwdChars.OrderBy(x => Guid.NewGuid()).ToArray());
+            
+            return rand;
         }
 
         /*
