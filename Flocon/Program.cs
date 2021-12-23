@@ -1,5 +1,6 @@
 using AspNetCore.Identity.Mongo;
 using AspNetCore.Identity.Mongo.Model;
+using Flocon.Mailing;
 using Flocon.Models;
 using Microsoft.Extensions.Options;
 
@@ -11,6 +12,7 @@ builder.Services.Configure<FloconDbSettings>(DBsettings);
 builder.Services.AddSingleton<IFloconDbSettings>(sp =>
     sp.GetRequiredService<IOptions<FloconDbSettings>>().Value);
 builder.Services.AddSingleton<CustomersService>();
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
 
 // Manage identities
