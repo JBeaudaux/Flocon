@@ -135,12 +135,23 @@ namespace Flocon.Controllers
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
         }
 
+        public async Task<IActionResult> CreateGroup(string id, IndexViewModel vm)
+        {
+            var cmp = _customersService.GetCompany(id);
+            if (cmp.Groups.Contains(vm.NewGroup) == false)
+            {
+                cmp.Groups.Add(vm.NewGroup);
+                await _customersService.UpdateAsset(id, cmp);
+            }
+
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
+        }
+
         // ToDo : Move to a "common" library
         /// <summary>
         /// Builds a random password for new users. Has 12 characters (3 upper case letters, 3 lower case letters, 3 digits, and 3 special characters)
         /// </summary>
-        /// <param name="length">Length of the password</param>
-        /// <returns></returns>
+        /// <returns>The randomly generated password</returns>
         public static string GetRandomPassword()
         {
             var length = 12;

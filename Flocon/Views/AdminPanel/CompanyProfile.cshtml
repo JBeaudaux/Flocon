@@ -57,13 +57,13 @@
                           <h4>Licence plan</h4>
                           <div class="row centered mt mb">
                           <div class="col-sm-4">
-                            <h1><i class='bx bx-group' ></i></h1>
+                            <h1><i class='bx bxs-user-account'></i></h1>
                             <h3>@Model.Users.Count(x => x.CompanyId == Model.NewCompany.Id)</h3>
                             <h6>USERS</h6>
                           </div>
                           <div class="col-sm-4">
                             <h1><i class='bx bx-sitemap'></i></h1>
-                            <h3>0</h3> @* ToDo : @Model.NewCompany.Groups.Count() Null value *@
+                            <h3>@Model.NewCompany.Groups.Count()</h3>
                             <h6>GROUPS</h6>
                           </div>
                           <div class="col-sm-4">
@@ -122,7 +122,13 @@
                         
                         <h4>Users</h4>
                         <div class="row centered">
-                          <table class="table">
+                        @if (Model.Users.Find(x => x.CompanyId == Model.NewCompany.Id) == null)
+                        {
+                            <h2>No user created yet!</h2>
+                        }
+                        else
+                        {
+                            <table class="table">
                             <thead>
                               <tr>
                                 <th>Name</th>
@@ -132,29 +138,23 @@
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>Oswell E. Spencer</td>
-                                <td>ospencer@umbrella.com</td>
-                                <td>Admin</td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <td>Edward Ashford</td>
-                                <td>eashford@umbrella.com</td>
-                                <td>Admin, Virology</td>
-                                <td></td>
-                              </tr>
-                              <tr>
-                                <td>Dr. James Marcus</td>
-                                <td>jmarcus@umbrella.com</td>
-                                <td>Executive Training School</td>
-                                <td></td>
-                              </tr>
+                                @foreach (var usr in Model.Users.FindAll(x => x.CompanyId == Model.NewCompany.Id))
+                                {
+                                    <tr>
+                                        <td>@usr.UserName</td>
+                                        <td>@usr.Email</td>
+                                        <td>ToDo</td>
+                                        <td>ToDo</td>
+                                      </tr>
+                                }
                             </tbody>
                           </table>
+                        }
 
                           <div>
-                            <button class="btn btn-theme" type="button" style="margin-bottom: 20px;">Create new users</button>
+                            <button class="btn btn-theme" type="button" style="margin-bottom: 20px;">
+                                <i class='bx bx-user-plus' ></i> Create new users
+                            </button>
                           </div>
                           
                           <br>
@@ -162,10 +162,44 @@
 
                         <h4>Groups</h4>
                         <div class="row centered">
-                          <h2>No group created yet!</h2>
+                            @if (Model.NewCompany.Groups.Count() < 1)
+                            {
+                                <h2>No group created yet!</h2>
+                            }
+                            else
+                            {
+                                <div class="row centered">
+                                  <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th>Group</th>
+                                        <th>Members</th>
+                                        <th>Actions</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var gp in Model.NewCompany.Groups)
+                                        {
+                                            <tr>
+                                                <td>@gp</td>
+                                                <td></td>
+                                                <td>+</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                  </table>
+
+                                </div>
+                            }
+                          
                           <div>
-                            <button class="btn btn-theme" type="button" style="margin-bottom: 20px;">Create a new group</button>
+                            <button class="btn btn-theme" alt="Create a new group" data-bs-toggle="modal" data-bs-target="#CreateGroup" 
+                                    type="button" style="margin-bottom:20px">
+                                    <i class='bx bx-group' ></i> Create new group
+                            </button>
                           </div>
+
+                          <br>
                         </div>
 
                       </div>
@@ -295,7 +329,7 @@
                             <i class='bx bx-trash'></i> Delete company
                           </button>
                           
-                          <button class="btn btn-theme" type="submit" style="margin-top:20px">
+                          <button class="btn btn-theme" type="submit" style="margin-top:15px; margin-bottom:15px;">
                               <i class='bx bx-save' ></i> Save company infos
                           </button>
 
@@ -308,6 +342,35 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="CreateGroup" tabindex="-1" aria-labelledby="CreateGroup" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create a new group</h5>
+                @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
+            </div>
+
+            <form role="form" class="form-horizontal" asp-action="CreateGroup" asp-route-id="@Model.NewCompany.Id" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="@Model.NewCompany.Id" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label asp-for="@Model.NewGroup" class="col-form-label">Group name</label>
+                            <input asp-for="@Model.NewGroup" type="text" class="form-control" >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" alt="Cancel">Cancel</button>
+                    <button class="btn btn-theme" type="submit" alt="Create group">Create group</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="RemoveCompany" tabindex="-1" aria-labelledby="RemoveCompany" aria-hidden="true">
     <div class="modal-dialog">
