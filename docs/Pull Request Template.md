@@ -1,10 +1,12 @@
 # Summary
----
+
 - **Date:** Date of Pull Request
 - **Author:** Author's trigram
 - **Reviewer:**  Reviewer's trigram
 - **Subject:**
-- **Label:** <% tp.file.title %>
+- **Label:** Short title
+
+---
 
 # Purpose
 
