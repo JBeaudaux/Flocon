@@ -1,0 +1,398 @@
+﻿@model Flocon.Models.AdminPanel.IndexViewModel
+
+@{
+    Layout = "_AdminPanel";
+    ViewData["Title"] = "Admin panel";
+}
+
+<div class="row mt">
+    <div class="col-lg-12">
+        <div class="row content-panel">
+            <div class="col-md-1 centered">
+                <a asp-controller="AdminPanel" asp-action="Index" alt="Back to admin panel"><i class='bx bx-undo'></i></a>
+              </div>
+
+            <div class="col-md-8 profile-text centered" style="margin-top: auto; margin-bottom: auto;">
+                <h3>@Model.NewCompany.CompanyName</h3>
+                <h6>@Model.NewCompany.BusinessField</h6>
+                <p>@Model.NewCompany.Description</p>
+            </div>
+
+            <div class="col-md-3 centered">
+                <div class="profile-pic">
+                    @if (string.IsNullOrEmpty(Model.NewCompany.LogoPath))
+                    { <p><img src="~/img/unknown-user.png" class="img-circle"></p> }
+                    else
+                    { <p><img src="~/img/companies/@Model.NewCompany.LogoPath" class="img-circle"></p> }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 mt">
+        <div class="row content-panel">
+            <div class="panel-heading">
+                <ul class="nav nav-pills nav-justified" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#pills-overview" type="button" role="tab"
+                                aria-controls="pills-overview" aria-selected="true">
+                            Overview
+                        </button>
+                    </li>
+                    
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="pill" data-bs-target="#pills-editprofile" type="button" role="tab"
+                                aria-controls="pills-editprofile" aria-selected="false">
+                            Edit profile
+                        </button>
+                    </li>
+                </ul>
+
+            </div>
+            
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-overview" role="tabpanel" aria-labelledby="pills-overview-tab">
+                    <div class="row">
+                        <div class="col-md-6 detailed">
+                          <h4>Licence plan</h4>
+                          <div class="row centered mt mb">
+                          <div class="col-sm-4">
+                            <h1><i class='bx bxs-user-account'></i></h1>
+                            <h3>@Model.Users.Count(x => x.CompanyId == Model.NewCompany.Id)</h3>
+                            <h6>USERS</h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class='bx bx-sitemap'></i></h1>
+                            <h3>@Model.NewCompany.Groups.Count()</h3>
+                            <h6>GROUPS</h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class='bx bx-calendar-star'></i></h1>
+                            <h3>@((int) (Model.NewCompany.LicenceExpiry - DateTime.Now).TotalDays)</h3>
+                            <h6>DAYS LEFT</h6>
+                          </div>
+                        </div>
+
+                        <h4>Customer stats</h4>
+                        <div class="row centered mt mb">
+                          <div class="col-sm-4">
+                            <h1><i class='bx bx-file'></i></h1>
+                            <h3>0</h3>
+                            <h6>UPLOADED DOCUMENTS</h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class='bx bxs-pen'></i></h1>
+                            <h3>0</h3>
+                            <h6>SIGNATURES MADE</h6>
+                          </div>
+                          <div class="col-sm-4">
+                            <h1><i class='bx bxs-calendar' ></i></h1>
+                            <h3>@( (int) (DateTime.Now - Model.NewCompany.CreatedOn).TotalDays)</h3>
+                            <h6>DAYS OF USE</h6>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-6">
+                        <h4>Location</h4>
+                        <div class="row centered">
+                          <p>
+                            @Model.NewCompany.ContactAddress<br/>
+                            @Model.NewCompany.ContactWebpage
+                          </p>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <h4>Contacts</h4>
+                        <div class="row centered">
+                          <p>
+                              @Model.NewCompany.ContactName<br/>
+                              @Model.NewCompany.ContactMail<br/>
+                              @Model.NewCompany.ContactPhone
+                          </p>
+                        </div>
+                      </div>
+
+                    </div>
+
+                      </div>
+
+                      <div class="col-md-6 detailed">
+                        
+                        <h4>Users</h4>
+                        <div class="row centered">
+                        @if (Model.Users.Find(x => x.CompanyId == Model.NewCompany.Id) == null)
+                        {
+                            <h2>No user created yet!</h2>
+                        }
+                        else
+                        {
+                            <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Groups</th>
+                                <th>Status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var usr in Model.Users.FindAll(x => x.CompanyId == Model.NewCompany.Id))
+                                {
+                                    <tr>
+                                        <td>@usr.UserName</td>
+                                        <td>@usr.Email</td>
+                                        <td>ToDo</td>
+                                        <td>ToDo</td>
+                                      </tr>
+                                }
+                            </tbody>
+                          </table>
+                        }
+
+                          <div>
+                            <button class="btn btn-theme" type="button" style="margin-bottom: 20px;">
+                                <i class='bx bx-user-plus' ></i> Create new users
+                            </button>
+                          </div>
+                          
+                          <br>
+                        </div>
+
+                        <h4>Groups</h4>
+                        <div class="row centered">
+                            @if (Model.NewCompany.Groups.Count() < 1)
+                            {
+                                <h2>No group created yet!</h2>
+                            }
+                            else
+                            {
+                                <div class="row centered">
+                                  <table class="table">
+                                    <thead>
+                                      <tr>
+                                        <th>Group</th>
+                                        <th>Members</th>
+                                        <th>Actions</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var gp in Model.NewCompany.Groups)
+                                        {
+                                            <tr>
+                                                <td>@gp</td>
+                                                <td></td>
+                                                <td>+</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                  </table>
+
+                                </div>
+                            }
+                          
+                          <div>
+                            <button class="btn btn-theme" alt="Create a new group" data-bs-toggle="modal" data-bs-target="#CreateGroup" 
+                                    type="button" style="margin-bottom:20px">
+                                    <i class='bx bx-group' ></i> Create new group
+                            </button>
+                          </div>
+
+                          <br>
+                        </div>
+
+                      </div>
+
+
+
+
+                      </div>
+
+
+
+
+                    </div>
+                
+                <div class="tab-pane fade" id="pills-editprofile" role="tabpanel" aria-labelledby="pills-editprofile-tab">
+                  <form role="form" class="form-horizontal" asp-action="UpdateCompany" method="post" enctype="multipart/form-data">
+                      <input type="hidden" asp-for="@Model.NewCompany.Id" />
+                  <div class="row">
+                      <div class="col-lg-6 detailed">
+                        <h4 class="mb">General Information</h4>
+
+                        <div class="row form-group">
+                            <label class="col-lg-3 control-label"> Avatar</label>
+                            <div class="col-lg-8">
+                              <input type="file" class="file-pos">
+                            </div>
+                          </div>
+
+                        <div class="row form-group">
+                          <label class="col-lg-3 control-label">Company name</label>
+                          <div class="col-lg-8">
+                            <input type="text" class="form-control" asp-for="NewCompany.CompanyName">
+                          </div>
+                        </div>
+
+                        <div class="row form-group">
+                          <label class="col-lg-3 control-label">Line of business</label>
+                          <div class="col-lg-8">
+                            <input type="text" class="form-control" asp-for="NewCompany.BusinessField">
+                          </div>
+                        </div>
+
+                        <div class="row form-group">
+                          <label class="col-lg-3 control-label">Description</label>
+                          <div class="col-lg-8">
+                            <textarea rows="10" class="form-control" asp-for="NewCompany.Description"></textarea>
+                          </div>
+                        </div>
+                        
+                      </div>
+
+                      <div class="col-lg-6 detailed">
+                        <h4 class="mb">Contact Information</h4>
+                        <div class="row form-group">
+                          <label class="col-lg-3 control-label">Contact name</label>
+                          <div class="col-lg-8">
+                            <input type="text" class="form-control" asp-for="NewCompany.ContactName">
+                          </div>
+                        </div>
+
+                        <div class="row form-group">
+                          <label class="col-lg-3 control-label">Address</label>
+                          <div class="col-lg-8">
+                            <input type="text" class="form-control" asp-for="NewCompany.ContactAddress">
+                          </div>
+                        </div>
+
+                        <div class="row form-group">
+                          <label class="col-lg-3 control-label">Phone</label>
+                          <div class="col-lg-8">
+                            <input type="text" class="form-control" asp-for="NewCompany.ContactPhone">
+                          </div>
+                        </div>
+
+                        <div class="row form-group">
+                          <label class="col-lg-3 control-label">Email</label>
+                          <div class="col-lg-8">
+                            <input type="text" class="form-control" asp-for="NewCompany.ContactMail">
+                          </div>
+                        </div>
+
+                        <div class="row form-group">
+                          <label class="col-lg-3 control-label">Web page</label>
+                          <div class="col-lg-8">
+                            <input type="text" class="form-control" asp-for="NewCompany.ContactWebpage">
+                          </div>
+                        </div>
+
+                        <h4 class="mb">Licencing</h4>
+
+                        <div class="row form-group">
+                          <label class="col-lg-3 control-label">Licenced users</label>
+                          <div class="col-lg-8">
+                            <input type="number" class="form-control" min="1" asp-for="NewCompany.MaxUsers">
+                          </div>
+                        </div>
+
+                        <div class="row">
+                            @if (Model.NewCompany.LicenceExpiry > DateTime.Now)
+                            {
+                                <button class="col-lg-5 btn btn-theme02" type="button" disabled>
+                                    <i class='bx bx-rotate-right'></i> Trial licence
+                                </button>
+                            }
+                            else
+                            {
+                                <a class="col-lg-5" asp-controller="AdminPanel" asp-action="RenewLicenceTrial" asp-route-id="@Model.NewCompany.Id">
+                                    <button class="btn btn-theme02" style="width: 100%" type="button" alt="Set trial licence (1 month)">
+                                        <i class='bx bx-rotate-right'></i> Trial licence
+                                    </button>
+                                </a>
+                                
+                            }
+                            <div class="col-lg-2"></div>
+
+                            <a class="col-lg-5" asp-controller="AdminPanel" asp-action="RenewLicenceYearly" asp-route-id="@Model.NewCompany.Id">
+                                <button class="btn btn-theme" style="width: 100%" type="button" alt="Set yearly licence (12 month)">
+                                    <i class='bx bx-star'></i> Yearly licence
+                                </button>
+                            </a>
+                            
+                        </div>
+                      </div>
+
+                          <button class="btn btn-danger" alt="Delete company" data-bs-toggle="modal" data-bs-target="#RemoveCompany" 
+                                  type="button" style="margin-top:20px">
+                            <i class='bx bx-trash'></i> Delete company
+                          </button>
+                          
+                          <button class="btn btn-theme" type="submit" style="margin-top:15px; margin-bottom:15px;">
+                              <i class='bx bx-save' ></i> Save company infos
+                          </button>
+
+                    </div>
+                  </form>
+                </div>
+            </div>
+              
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="CreateGroup" tabindex="-1" aria-labelledby="CreateGroup" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create a new group</h5>
+                @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
+            </div>
+
+            <form role="form" class="form-horizontal" asp-action="CreateGroup" asp-route-id="@Model.NewCompany.Id" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="@Model.NewCompany.Id" />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label asp-for="@Model.NewGroup" class="col-form-label">Group name</label>
+                            <input asp-for="@Model.NewGroup" type="text" class="form-control" >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" alt="Cancel">Cancel</button>
+                    <button class="btn btn-theme" type="submit" alt="Create group">Create group</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="RemoveCompany" tabindex="-1" aria-labelledby="RemoveCompany" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Remove company</h5>
+                @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
+            </div>
+        
+            <div class="modal-body">
+                <p>Are you sure you want to delete company "@Model.NewCompany.CompanyName"? This actions is permanent.</p>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" alt="No">No</button>
+
+                <a asp-controller="AdminPanel" asp-action="DeleteCompany" asp-route-id="@Model.NewCompany.Id">
+                    <button class="btn btn-danger" type="button" alt="Yes">
+                            Yes
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

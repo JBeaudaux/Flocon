@@ -1,4 +1,128 @@
 ﻿@{
-    ViewData["Title"] = "Flocon - Dashboard";
+    Layout = ""; 
+    ViewData["Title"] = "Flocon - Login";
 }
 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Flocon - Login</title>
+    <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="~/img/favicon.png" rel="icon">
+
+
+  <!-- Bootstrap core CSS -->
+  <link href="~/lib/bootstrap-3.3.7/css/bootstrap.css" rel="stylesheet">
+  <!--external css-->
+  <link href="~/lib/fontawesome-free-5.15.1-web/css/all.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="~/css/login.css?rnd=132" rel="stylesheet">
+  <link href="~/css/login-responsive.css?rnd=132" rel="stylesheet">
+    <!-- Use for authentication with Moralis -->
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="https://unpkg.com/moralis/dist/moralis.js"></script>
+</head>
+
+<body>
+  <!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+  <div id="login-page">
+    <div class="container">
+      <form class="form-login" action="index-Copy.html">
+        <h2 class="form-login-heading">Flocon</h2>
+        <div class="login-wrap">
+@*          <input type="text" class="form-control" placeholder="Email address" autofocus>
+          <br>
+          <input type="password" class="form-control" placeholder="Password">
+          <label class="checkbox" style="margin-left: 20px;">
+            <input type="checkbox" value="remember-me" > Remember me
+            <span class="pull-right">
+            <a data-toggle="modal" data-target="#ForgotPwd">Forgot your password?</a>
+            </span>
+            </label>*@
+          <button class="btn btn-theme btn-block" href="index-Copy.html" type="button" onclick="login()"><i class="fa fa-lock"></i>Login with Metamask</button>
+          <hr>
+          <button class="btn btn-theme02 btn-block" data-toggle="modal" data-target="#ForgotPwd" type="button"><i class="fa fa-key"></i>Get a license.</button>
+        </div>
+        <!-- Modal -->
+        <div role="dialog" tabindex="-1" id="ForgotPwd" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Forgot your password?</h4>
+              </div>
+              <div class="modal-body">
+                <p>Enter your email address and we will send you a temporary password.</p>
+                <input type="text" name="email" placeholder="Email address" autocomplete="off" class="form-control placeholder-no-fix">
+              </div>
+              <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                <button class="btn btn-theme" type="button">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- modal -->
+
+        <!-- Modal -->
+        <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="LicenceRequest" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Test...</h4>
+              </div>
+              <div class="modal-body">
+                <p>Enter your email address and we will send you a temporary password.</p>
+                <input type="text" name="email" placeholder="Email address" autocomplete="off" class="form-control placeholder-no-fix">
+              </div>
+              <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                <button class="btn btn-theme" type="button">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- modal -->
+      </form>
+    </div>
+    @*<button type="button" onclick="login()">Login with Metamask</button>*@
+  </div>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="~/lib/jquery/dist/jquery.min.js"></script>
+  <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+  <script>
+      Moralis.initialize("mZUKiVs4n8XcNZwuq0riiTNAPP29CqdfevSVYYat")
+      Moralis.serverURL = "https://bcyyhqybnajd.usemoralis.com:2053/server"
+
+      async function login(){
+          console.log("login clicked");
+          var user = await Moralis.Web3.authenticate();
+          if(user){
+              console.log(user);
+          }
+      }
+   </script>
+ 
+  <!--BACKSTRETCH-->
+  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  <script type="text/javascript" src="~/lib/jquery.backstretch.min.js"></script>
+  <script>
+    $.backstretch("../img/hero-bg.jpg", {
+      speed: 500
+    });
+  </script>
+</body>
+
+</html>
