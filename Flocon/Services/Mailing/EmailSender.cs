@@ -12,7 +12,7 @@ using RazorEngine.Configuration;
 using Flocon.Models;
 using RazorEngine.Text;
 
-namespace Flocon.Mailing
+namespace Flocon.Services.Mailing
 {
     public class EmailSender : IEmailSender
     {
@@ -74,28 +74,23 @@ namespace Flocon.Mailing
 
         public Task SendContactUsEmailAsync(string email, string nickname, string subject, string msg)
         {
-            var sendGridKey = @"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";
-            return ExecuteContactUs(sendGridKey, email, nickname, subject, msg);
-        }
+            var sendGridKey = @"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";
 
-        public async Task ExecuteContactUs(string apiKey, string mail, string nick, string sub, string mess)
-        {
-            // ToDo : Make proper HTML email
-            // ToDo : Remove my personal email
+            var mf = new MailFields
+            {
+                Title = "Contact message to Flocon.io",
+                AddImage = false,
+                SrcImage = "",
+                SupHeader = $"{nickname}",
+                Header = $"{subject}",
+                Paragraph = $"{msg}",
+                ActionButton = "Reply",
+                ActionTxt = "Reply",
+                ActionLink = $"mailto:{email}"
+            };
 
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("neant.total@gmail.com", "Jul");
-            var to = new EmailAddress("neant.total@gmail.com", "Jul");
-            string txtMsg = string.Format("Flocon message from {0} ({1}) : {2}", nick, mail, mess);
-            var msg = MailHelper.CreateSingleEmail(from, to, sub, txtMsg, txtMsg);
-
-            // Disable click tracking.
-            msg.SetClickTracking(false, false);
-
-            // ToDo : Put back email management
-            var response = await client.SendEmailAsync(msg);
-
-            // return response;
+            // ToDo : Replace mail with Flocon contact mail
+            return ExecuteMail(sendGridKey, "neant.total@gmail.com", "Flocon Admin", mf);
         }
 
         public Task SendRegisterEmailAsync(string email, string nickname, string company, string password, string validUrl)

@@ -1,7 +1,8 @@
 ﻿using AspNetCore.Identity.Mongo.Model;
-using Flocon.Mailing;
+using Flocon.Services.Mailing;
 using Flocon.Models;
 using Flocon.Models.AdminPanel;
+using Flocon.Services.FileManager;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,18 +15,21 @@ namespace Flocon.Controllers
         private readonly RoleManager<MongoRole> _roleManager;
         private readonly CustomersService _customersService;
         private readonly IEmailSender _emailSender;
+        private IFileManager _fileManager;
         private readonly ILogger<HomeController> _logger;
 
         public AdminPanelController(UserManager<UserFlocon> userManager,
                                     RoleManager<MongoRole> roleManager,
                                     CustomersService customersService,
                                     IEmailSender emailSender,
+                                    IFileManager fileManager,
                                     ILogger<HomeController> logger)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _customersService = customersService;
             _emailSender = emailSender;
+            _fileManager = fileManager;
             _logger = logger;
         }
 
@@ -108,8 +112,26 @@ namespace Flocon.Controllers
         public async Task<IActionResult> UpdateCompany(IndexViewModel vm)
         {
             string cmpId = vm.NewCompany.Id;
+            var company = _customersService.GetCompany(cmpId);
+
+            // Trick : Copy to ensure that field not in the form are not erased.
+            company.CompanyName = vm.NewCompany.CompanyName;
+            company.BusinessField = vm.NewCompany.BusinessField;
+            company.Description = vm.NewCompany.Description;
+            company.ContactName = vm.NewCompany.ContactName;
+            company.ContactAddress = vm.NewCompany.ContactAddress;
+            company.ContactPhone = vm.NewCompany.ContactPhone;
+            company.ContactMail = vm.NewCompany.ContactMail;
+            company.ContactWebpage = vm.NewCompany.ContactWebpage;
+            company.MaxUsers = vm.NewCompany.MaxUsers;
+
+            if (vm.NewAvatar != null)
+            {
+                company.LogoPath = await _fileManager.SaveImage(vm.NewAvatar);
+            }
+
             //vm.NewCompany.Id = "";
-            await _customersService.UpdateAsset(cmpId, vm.NewCompany);
+            await _customersService.UpdateAsset(cmpId, company);
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = cmpId });
         }
 
