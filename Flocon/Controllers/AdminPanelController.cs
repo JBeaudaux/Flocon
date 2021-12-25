@@ -1,5 +1,5 @@
 ﻿using AspNetCore.Identity.Mongo.Model;
-using Flocon.Mailing;
+using Flocon.Services.Mailing;
 using Flocon.Models;
 using Flocon.Models.AdminPanel;
 using Flocon.Services.FileManager;

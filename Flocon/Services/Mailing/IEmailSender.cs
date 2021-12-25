@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Flocon.Mailing
+namespace Flocon.Services.Mailing
 {
     public interface IEmailSender
     {
