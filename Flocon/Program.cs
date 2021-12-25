@@ -2,6 +2,7 @@ using AspNetCore.Identity.Mongo;
 using AspNetCore.Identity.Mongo.Model;
 using Flocon.Mailing;
 using Flocon.Models;
+using Flocon.Services.FileManager;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +13,9 @@ builder.Services.Configure<FloconDbSettings>(DBsettings);
 builder.Services.AddSingleton<IFloconDbSettings>(sp =>
     sp.GetRequiredService<IOptions<FloconDbSettings>>().Value);
 builder.Services.AddSingleton<CustomersService>();
-builder.Services.AddSingleton<IEmailSender, EmailSender>();
 
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
+builder.Services.AddTransient<IFileManager, FileManager>();
 
 // Manage identities
 builder.Services.AddIdentityMongoDbProvider<UserFlocon, MongoRole>(identity =>

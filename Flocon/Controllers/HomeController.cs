@@ -1,13 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Flocon.Services.FileManager;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Flocon.Controllers
 {
     public class HomeController : Controller
     {
+        private IFileManager _fileManager;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IFileManager fileManager, 
+                              ILogger<HomeController> logger)
         {
+            _fileManager = fileManager;
             _logger = logger;
         }
 
