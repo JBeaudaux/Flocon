@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Flocon.Services.FileManager
 {
+    // WARNING : As of now, file upload does not work with Brave!!!
     public class FileManager : IFileManager
     {
         // ToDo : Manage different folders

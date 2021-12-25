@@ -111,16 +111,27 @@ namespace Flocon.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateCompany(IndexViewModel vm)
         {
-            // ToDo : It erases groups and other infos not in form...
             string cmpId = vm.NewCompany.Id;
+            var company = _customersService.GetCompany(cmpId);
+
+            // Trick : Copy to ensure that field not in the form are not erased.
+            company.CompanyName = vm.NewCompany.CompanyName;
+            company.BusinessField = vm.NewCompany.BusinessField;
+            company.Description = vm.NewCompany.Description;
+            company.ContactName = vm.NewCompany.ContactName;
+            company.ContactAddress = vm.NewCompany.ContactAddress;
+            company.ContactPhone = vm.NewCompany.ContactPhone;
+            company.ContactMail = vm.NewCompany.ContactMail;
+            company.ContactWebpage = vm.NewCompany.ContactWebpage;
+            company.MaxUsers = vm.NewCompany.MaxUsers;
 
             if (vm.NewAvatar != null)
             {
-                vm.NewCompany.LogoPath = await _fileManager.SaveImage(vm.NewAvatar);
+                company.LogoPath = await _fileManager.SaveImage(vm.NewAvatar);
             }
 
             //vm.NewCompany.Id = "";
-            await _customersService.UpdateAsset(cmpId, vm.NewCompany);
+            await _customersService.UpdateAsset(cmpId, company);
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = cmpId });
         }
 
