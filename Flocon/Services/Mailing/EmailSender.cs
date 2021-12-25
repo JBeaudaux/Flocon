@@ -133,7 +133,6 @@ namespace Flocon.Services.Mailing
 
             // ToDo : Put back email management
             var response = await client.SendEmailAsync(msg);
-            var test = 0;
         }
     }
 }

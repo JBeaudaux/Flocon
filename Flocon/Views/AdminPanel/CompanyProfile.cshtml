@@ -224,28 +224,28 @@
                         <div class="row form-group">
                             <label class="col-lg-3 control-label"> Logo</label>
                             <div class="col-lg-8">
-                              <input type="file" class="file-pos" asp-for="NewAvatar">
+                                <input asp-for="@Model.NewAvatar" type="file">
                             </div>
                           </div>
 
                         <div class="row form-group">
                           <label class="col-lg-3 control-label">Company name</label>
                           <div class="col-lg-8">
-                            <input type="text" class="form-control" asp-for="NewCompany.CompanyName">
+                            <input type="text" class="form-control" asp-for="@Model.NewCompany.CompanyName">
                           </div>
                         </div>
 
                         <div class="row form-group">
                           <label class="col-lg-3 control-label">Line of business</label>
                           <div class="col-lg-8">
-                            <input type="text" class="form-control" asp-for="NewCompany.BusinessField">
+                            <input type="text" class="form-control" asp-for="@Model.NewCompany.BusinessField">
                           </div>
                         </div>
 
                         <div class="row form-group">
                           <label class="col-lg-3 control-label">Description</label>
                           <div class="col-lg-8">
-                            <textarea rows="10" class="form-control" asp-for="NewCompany.Description"></textarea>
+                            <textarea rows="10" class="form-control" asp-for="@Model.NewCompany.Description"></textarea>
                           </div>
                         </div>
                         
@@ -256,21 +256,21 @@
                         <div class="row form-group">
                           <label class="col-lg-3 control-label">Contact name</label>
                           <div class="col-lg-8">
-                            <input type="text" class="form-control" asp-for="NewCompany.ContactName">
+                            <input type="text" class="form-control" asp-for="@Model.NewCompany.ContactName">
                           </div>
                         </div>
 
                         <div class="row form-group">
                           <label class="col-lg-3 control-label">Address</label>
                           <div class="col-lg-8">
-                            <input type="text" class="form-control" asp-for="NewCompany.ContactAddress">
+                            <input type="text" class="form-control" asp-for="@Model.NewCompany.ContactAddress">
                           </div>
                         </div>
 
                         <div class="row form-group">
                           <label class="col-lg-3 control-label">Phone</label>
                           <div class="col-lg-8">
-                            <input type="text" class="form-control" asp-for="NewCompany.ContactPhone">
+                            <input type="text" class="form-control" asp-for="@Model.NewCompany.ContactPhone">
                           </div>
                         </div>
 
@@ -284,7 +284,7 @@
                         <div class="row form-group">
                           <label class="col-lg-3 control-label">Web page</label>
                           <div class="col-lg-8">
-                            <input type="text" class="form-control" asp-for="NewCompany.ContactWebpage">
+                            <input type="text" class="form-control" asp-for="@Model.NewCompany.ContactWebpage">
                           </div>
                         </div>
 
@@ -293,7 +293,7 @@
                         <div class="row form-group">
                           <label class="col-lg-3 control-label">Licenced users</label>
                           <div class="col-lg-8">
-                            <input type="number" class="form-control" min="1" asp-for="NewCompany.MaxUsers">
+                            <input type="number" class="form-control" min="1" asp-for="@Model.NewCompany.MaxUsers">
                           </div>
                         </div>
 

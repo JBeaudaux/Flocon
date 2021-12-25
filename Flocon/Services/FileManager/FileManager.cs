@@ -15,7 +15,7 @@ namespace Flocon.Services.FileManager
 
         public FileManager(IConfiguration config)
         {
-            _imageAvatarsPath = config["Path:AvatarImgs"]; // The path to the photos of the profile pictures (for User model) 
+            _imageAvatarsPath = config["StaticPaths:AvatarImgs"]; // The path to the photos of the profile pictures and company logos 
         }
 
         public FileStream ImageStream(string image)

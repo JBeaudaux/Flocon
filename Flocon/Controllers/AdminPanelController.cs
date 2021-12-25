@@ -111,6 +111,7 @@ namespace Flocon.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateCompany(IndexViewModel vm)
         {
+            // ToDo : It erases groups and other infos not in form...
             string cmpId = vm.NewCompany.Id;
 
             if (vm.NewAvatar != null)
