@@ -13,5 +13,9 @@ namespace Flocon.Models.AdminPanel
         public Company NewCompany { get; set; }
         public string NewGroup { get; set; }
         public IFormFile NewAvatar { get; set; }
+
+        public string NewUsrName { get; set; }
+        public string NewUsrMail { get; set; }
+        public string NewUsrPass { get; set; }
     }
 }

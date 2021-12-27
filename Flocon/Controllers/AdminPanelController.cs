@@ -57,6 +57,7 @@ namespace Flocon.Controllers
             vm.Companies = _customersService.GetCompaniesList();
 
             vm.NewCompany = _customersService.GetCompany(id);
+            vm.NewUsrPass = GetRandomPassword();
 
             return View(vm);
         }
@@ -168,6 +169,36 @@ namespace Flocon.Controllers
 
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
         }
+
+        public IActionResult CreateUsers(string id, IndexViewModel vm)
+        {
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(vm.NewUsrName) || 
+                string.IsNullOrEmpty(vm.NewUsrMail) || string.IsNullOrEmpty(vm.NewUsrPass))
+            {
+                // ToDo : Make validation of elements
+                return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
+            }
+
+            var myUser = new UserFlocon { UserName=vm.NewUsrName, Email=vm.NewUsrMail};
+            var resCreate = _userManager.CreateAsync(myUser, vm.NewUsrPass).Result;
+            if (resCreate.Succeeded)
+            {
+                var resRole = _userManager.AddToRoleAsync(myUser, "User").Result;
+                if (resRole.Succeeded == false)
+                {
+                    _logger.LogWarning("Failed to attribute User role to user at creation :: CompanyId={0} :: Name={1} :: Email={2} :: Pass={3}",
+                                   id, vm.NewUsrName, vm.NewUsrMail, vm.NewUsrPass);
+                }
+            }
+            else
+            {
+                _logger.LogWarning("Failed to create user :: CompanyId={0} :: Name={1} :: Email={2} :: Pass={3}",
+                                   id, vm.NewUsrName, vm.NewUsrMail, vm.NewUsrPass);
+            }
+
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
+        }
+
 
         // ToDo : Move to a "common" library
         /// <summary>
