@@ -6,7 +6,7 @@ namespace Flocon.Models
     [BsonIgnoreExtraElements]
     public class UserFlocon : MongoUser
     {
-        public string FistName { get; set; }
+        public string FirstName { get; set; }
         public string LastName { get; set; }
         public string MetamaskAddr { get; set; }
         public string ProfilePicPath { get; set; }

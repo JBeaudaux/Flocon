@@ -96,7 +96,8 @@ namespace Flocon.Controllers
             }
             else
             {
-                _logger.LogInformation(String.Format("Failed registration for company {0} :: CompanyId={1}", vm.NewCompany.CompanyName, vm.NewCompany.Id));
+                _logger.LogInformation(String.Format("Failed registration for company {0} :: CompanyId={1}",
+                                                      vm.NewCompany.CompanyName, vm.NewCompany.Id));
             }
 
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = cmp.Id });
@@ -170,35 +171,144 @@ namespace Flocon.Controllers
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
         }
 
-        public IActionResult CreateUsers(string id, IndexViewModel vm)
+        [HttpPost]
+        public IActionResult CreateUser(string id, IndexViewModel vm)
         {
-            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(vm.NewUsrName) || 
-                string.IsNullOrEmpty(vm.NewUsrMail) || string.IsNullOrEmpty(vm.NewUsrPass))
+            CreateNewUser(id, vm.NewUsrName, vm.NewUsrFirstName, vm.NewUsrLastName, vm.NewUsrMail, vm.NewUsrPass, "", false);
+
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
+        }
+
+        [HttpPost]
+        public IActionResult CreateUsersFromCSV(string id, IndexViewModel vm)
+        {
+            // ToDo : Add controls to ensure that bad file or format are managed
+            try
             {
-                // ToDo : Make validation of elements
+                if (vm.NewUsrCSV == null)
+                {
+                    throw new FileNotFoundException("CSV file not found for users import");
+                }
+
+                using (var reader = new StreamReader(vm.NewUsrCSV.OpenReadStream()))
+                {
+                    string[] splitted;
+                    // Skip header line
+                    string? l = reader.ReadLine();
+                    l = reader.ReadLine();
+                    while (!string.IsNullOrEmpty(l))
+                    {
+                        splitted = l.Split(",");
+                        if (splitted.Count() != 7)
+                        {
+                            throw new FormatException("CSV file format invalid for users import : Incorrect number of elements");
+                        }
+
+                        bool activateUsr = splitted[6].ToLower() == "yes";
+                        CreateNewUser(id, splitted[0], splitted[1], splitted[2], splitted[3], splitted[4], splitted[5], activateUsr);
+
+                        _logger.LogInformation("ParseCSV : Username={0} :: Email={1} :: Password={2} :: Group={3} :: Active={4}",
+                                                splitted[0], splitted[3], splitted[4], splitted[5], splitted[6]);
+                        l = reader.ReadLine();
+                    }
+                }
+            }
+            catch (Exception)
+            {
                 return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
             }
+            
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
+        }
 
-            var myUser = new UserFlocon { UserName=vm.NewUsrName, Email=vm.NewUsrMail};
-            var resCreate = _userManager.CreateAsync(myUser, vm.NewUsrPass).Result;
+        /// <summary>
+        /// Creates a new user in the database. User will have a "USER" role
+        /// </summary>
+        /// <param name="cmpId">ID of the company the user it employed by</param>
+        /// <param name="usrName">Full name of the user</param>
+        /// <param name="usrMail">Email address of the user</param>
+        /// <param name="usrPass">Password of the account to create. If void, the default password will be assigned</param>
+        /// <param name="usrGroup">The company group to assign the user to</param>
+        /// <param name="active">Wether the user should be activated</param>
+        /// <returns></returns>
+        private bool CreateNewUser(string cmpId, string usrName, string firstName, string lastName, string usrMail, string usrPass,
+                                   string usrGroup, bool active)
+        {
+            if (string.IsNullOrEmpty(cmpId) || string.IsNullOrEmpty(usrName) || string.IsNullOrEmpty(usrMail))
+            {
+                // ToDo : Make validation of elements
+                return false;
+            }
+
+            // ToDo : Test Metamask Addr as well
+            if (_userManager.Users.Any(u => u.Email == usrMail))
+            {
+                _logger.LogWarning("Cannot create user, already exists :: CompanyId={0} :: Name={1} :: Email={2}", cmpId, usrName, usrMail);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(usrPass))
+            {
+                usrPass = "NancyFlocon&2021";
+            }
+
+            var cmpny = _customersService.GetCompany(cmpId);
+            if (cmpny == null)
+            {
+                _logger.LogWarning("Failed to create user, company not found :: CompanyId={0} :: Name={1} :: Email={2}", cmpId, usrName, usrMail);
+                return false;
+            }
+
+            var myUser = new UserFlocon { UserName = usrName, FirstName=firstName, LastName=lastName, Email = usrMail, CompanyId = cmpId};
+            if (!string.IsNullOrEmpty(usrGroup))
+            {
+                // Assign group
+                if (cmpny.Groups.Contains(usrGroup))
+                {
+                    myUser.GroupId = usrGroup;
+                }
+                else
+                {
+                    _logger.LogWarning("Failed to assign group to user, group not found :: CompanyId={0} :: Name={1} :: Email={2} :: Group={3}", 
+                                        cmpId, usrName, usrMail, usrGroup);
+                    myUser.GroupId = "";
+                }
+            }
+
+            var nbUsrs = _userManager.Users.ToList().FindAll(x => x.IsActive == true).Count();
+            if (active && nbUsrs >= cmpny.MaxUsers)
+            {
+                _logger.LogWarning("Too many active users, set to inactive :: CompanyId={0} :: Name={1} :: Email={2}", cmpId, usrName, usrMail);
+                myUser.IsActive = false;
+            }
+            else
+            {
+                myUser.IsActive = active;
+            }
+
+            var resCreate = _userManager.CreateAsync(myUser, usrPass).Result;
             if (resCreate.Succeeded)
             {
                 var resRole = _userManager.AddToRoleAsync(myUser, "User").Result;
                 if (resRole.Succeeded == false)
                 {
-                    _logger.LogWarning("Failed to attribute User role to user at creation :: CompanyId={0} :: Name={1} :: Email={2} :: Pass={3}",
-                                   id, vm.NewUsrName, vm.NewUsrMail, vm.NewUsrPass);
+                    _logger.LogWarning("Failed to attribute User role to user at creation :: CompanyId={0} :: Name={1} :: Email={2} :: Pass={3} :: Group={4}",
+                                   cmpId, usrName, usrMail, usrPass, usrGroup);
+                    return false;
                 }
             }
             else
             {
-                _logger.LogWarning("Failed to create user :: CompanyId={0} :: Name={1} :: Email={2} :: Pass={3}",
-                                   id, vm.NewUsrName, vm.NewUsrMail, vm.NewUsrPass);
+                _logger.LogWarning("Failed to create user :: CompanyId={0} :: Name={1} :: Email={2} :: Pass={3} :: Group={4}",
+                                   cmpId, usrName, usrMail, usrPass, usrGroup);
+                return false;
             }
 
-            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
-        }
+            _logger.LogInformation("User created :: CompanyId={0} :: Name={1} :: Email={2} :: Pass={3} :: Group={4} :: Active={5}",
+                                   myUser.CompanyId, myUser.UserName, myUser.Email, usrPass, myUser.GroupId, myUser.IsActive.ToString());
 
+            return true;
+        }
 
         // ToDo : Move to a "common" library
         /// <summary>

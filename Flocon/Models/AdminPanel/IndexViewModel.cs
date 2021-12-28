@@ -15,7 +15,10 @@ namespace Flocon.Models.AdminPanel
         public IFormFile NewAvatar { get; set; }
 
         public string NewUsrName { get; set; }
+        public string NewUsrFirstName { get; set; }
+        public string NewUsrLastName { get; set; }
         public string NewUsrMail { get; set; }
         public string NewUsrPass { get; set; }
+        public IFormFile NewUsrCSV { get; set; }
     }
 }
