@@ -58,8 +58,8 @@
                           <div class="row centered mt mb">
                           <div class="col-sm-4">
                             <h1><i class='bx bxs-user-account'></i></h1>
-                            <h3>@Model.Users.Count(x => x.CompanyId == Model.NewCompany.Id)</h3>
-                            <h6>USERS</h6>
+                            <h3>@Model.Users.Count(x => x.CompanyId == Model.NewCompany.Id && x.IsActive)</h3>
+                            <h6>ACTIVE USERS</h6>
                           </div>
                           <div class="col-sm-4">
                             <h1><i class='bx bx-sitemap'></i></h1>
@@ -131,10 +131,11 @@
                             <table class="table">
                             <thead>
                               <tr>
-                                <th>Name</th>
+                                <th>ID</th>
                                 <th>Email</th>
-                                <th>Groups</th>
+                                <th>Group</th>
                                 <th>Status</th>
+                                <th>Actions</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -143,7 +144,26 @@
                                     <tr>
                                         <td>@usr.UserName</td>
                                         <td>@usr.Email</td>
-                                        <td>ToDo</td>
+                                        <td>@usr.GroupId</td>
+                                        <td>
+                                            <form method="post" enctype="multipart/form-data" style="display: flex;"
+                                                  asp-action="ActivateUser" asp-route-compyid="@usr.CompanyId" asp-route-usrid="@usr.Id">
+                                                @if (usr.IsActive)
+                                                {
+                                                    <label class="switch">
+                                                      <input type="checkbox" onchange="form.submit()" checked asp-for="@Model.NewUser.IsActive">
+                                                      <span class="slider round"></span>
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="switch">
+                                                      <input type="checkbox" onchange="form.submit()" asp-for="@Model.NewUser.IsActive">
+                                                      <span class="slider round"></span>
+                                                    </label>
+                                                }
+                                            </form>
+                                        </td>
                                         <td>ToDo</td>
                                       </tr>
                                 }

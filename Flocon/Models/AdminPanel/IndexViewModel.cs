@@ -14,6 +14,8 @@ namespace Flocon.Models.AdminPanel
         public string NewGroup { get; set; }
         public IFormFile NewAvatar { get; set; }
 
+        public UserFlocon NewUser { get; set; }
+        // ToDo : replace name, fist name, last name, mail with NewUser
         public string NewUsrName { get; set; }
         public string NewUsrFirstName { get; set; }
         public string NewUsrLastName { get; set; }

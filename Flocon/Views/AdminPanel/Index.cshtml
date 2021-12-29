@@ -90,7 +90,7 @@ else
                     </td>
                     <td>
                         @{
-                            var usr = Model.Users.Count(x => x.CompanyId == cmp.Id);
+                            var usr = Model.Users.Count(x => x.CompanyId == cmp.Id && x.IsActive);
                             <p>@usr / @cmp.MaxUsers</p>
                         }
                     </td>

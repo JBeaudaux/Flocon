@@ -221,6 +221,39 @@ namespace Flocon.Controllers
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
         }
 
+        [HttpPost]
+        public IActionResult ActivateUser(string compyid, string usrid, IndexViewModel vm)
+        {
+            var usrInfo = _userManager.FindByIdAsync(usrid).Result;
+            var cmpny = _customersService.GetCompany(compyid);
+            if (cmpny == null)
+            {
+                _logger.LogWarning("Failed to update user, company not found :: CompanyId={0} :: UserId={1}", compyid, usrid);
+                return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
+            }
+
+            var nbUsrs = _userManager.Users.ToList().FindAll(x => x.IsActive == true).Count();
+            if (vm.NewUser.IsActive && nbUsrs >= cmpny.MaxUsers)
+            {
+                _logger.LogWarning("Failed to update user, too many active users :: CompanyId={0} :: UserId={1}", compyid, usrid);
+                return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
+            }
+
+            usrInfo.IsActive = vm.NewUser.IsActive;
+
+            var resUpdate = _userManager.UpdateAsync(usrInfo).Result;
+            if (resUpdate.Succeeded)
+            {
+                _logger.LogInformation("User activity updated :: CompanyId={0} :: UserId={1} :: Activity={2}", compyid, usrid, usrInfo.IsActive.ToString());
+            }
+            else
+            {
+                _logger.LogWarning("User activity update Failed :: CompanyId={0} :: UserId={1} :: Activity={2}", compyid, usrid, usrInfo.IsActive.ToString());
+            }
+
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
+        }
+
         /// <summary>
         /// Creates a new user in the database. User will have a "USER" role
         /// </summary>
