@@ -172,15 +172,15 @@ namespace Flocon.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser(string id, IndexViewModel vm)
+        public IActionResult CreateUser(string compyid, IndexViewModel vm)
         {
-            CreateNewUser(id, vm.NewUsrName, vm.NewUsrFirstName, vm.NewUsrLastName, vm.NewUsrMail, vm.NewUsrPass, "", false);
+            CreateNewUser(compyid, vm.NewUser.UserName, vm.NewUser.FirstName, vm.NewUser.LastName, vm.NewUser.Email, vm.NewUsrPass, "", false);
 
-            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
         }
 
         [HttpPost]
-        public IActionResult CreateUsersFromCSV(string id, IndexViewModel vm)
+        public IActionResult CreateUsersFromCSV(string compyid, IndexViewModel vm)
         {
             // ToDo : Add controls to ensure that bad file or format are managed
             try
@@ -205,7 +205,7 @@ namespace Flocon.Controllers
                         }
 
                         bool activateUsr = splitted[6].ToLower() == "yes";
-                        CreateNewUser(id, splitted[0], splitted[1], splitted[2], splitted[3], splitted[4], splitted[5], activateUsr);
+                        CreateNewUser(compyid, splitted[0], splitted[1], splitted[2], splitted[3], splitted[4], splitted[5], activateUsr);
 
                         _logger.LogInformation("ParseCSV : Username={0} :: Email={1} :: Password={2} :: Group={3} :: Active={4}",
                                                 splitted[0], splitted[3], splitted[4], splitted[5], splitted[6]);
@@ -215,10 +215,10 @@ namespace Flocon.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
+                return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
             }
             
-            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
         }
 
         [HttpPost]
