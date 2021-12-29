@@ -5,6 +5,7 @@ using Flocon.Models.AdminPanel;
 using Flocon.Services.FileManager;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Flocon.Controllers
 {
@@ -34,7 +35,7 @@ namespace Flocon.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var vm = new IndexViewModel();
             vm.Users = _userManager.Users.ToList();
@@ -42,6 +43,9 @@ namespace Flocon.Controllers
             vm.Companies = _customersService.GetCompaniesList();
 
             vm.NewCompany = new Company();
+
+            var connectedUser = await GetConnectedUser();
+            
 
             return View(vm);
         }
@@ -413,6 +417,18 @@ namespace Flocon.Controllers
             string rand = new string(pwdChars.OrderBy(x => Guid.NewGuid()).ToArray());
             
             return rand;
+        }
+
+        /// <summary>
+        /// Gets the user currently connected to display user infos
+        /// </summary>
+        /// <returns>Currently connected user or null if none connected</returns>
+        public async Task<UserFlocon> GetConnectedUser()
+        {
+            ClaimsPrincipal currentUser = this.User;
+            var usr = await _userManager.GetUserAsync(User);
+
+            return usr;
         }
 
         /*

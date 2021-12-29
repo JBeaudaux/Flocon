@@ -79,22 +79,22 @@ else
             @foreach (var cmp in Model.Companies)
             {
                 <tr>
-                    <td>
+                    <td valign="middle">
                         @Html.DisplayFor(modelItem => cmp.Id)
                     </td>
-                    <td>
+                    <td valign="middle">
                         @Html.DisplayFor(modelItem => cmp.CompanyName)
                     </td>
-                    <td>
+                    <td valign="middle">
                         @Html.DisplayFor(modelItem => cmp.ContactMail)
                     </td>
-                    <td>
+                    <td valign="middle">
                         @{
                             var usr = Model.Users.Count(x => x.CompanyId == cmp.Id && x.IsActive);
-                            <p>@usr / @cmp.MaxUsers</p>
+                            <span>@usr / @cmp.MaxUsers</span>
                         }
                     </td>
-                    <td>
+                    <td valign="middle">
                         @if (cmp.LicenceExpiry > DateTime.Now) {
                             <span class="label label-success label-mini">Active</span>
                         }
@@ -105,7 +105,7 @@ else
                             <span class="label label-danger label-mini">Expired</span>
                         }
                     </td>
-                    <td>
+                    <td valign="middle">
                         <a asp-controller="AdminPanel" asp-action="CompanyProfile" asp-route-id="@cmp.Id">
                             <button class="btn btn-primary btn-xs" alt="Company page">
                                     <i class="fas fa-search"></i>
