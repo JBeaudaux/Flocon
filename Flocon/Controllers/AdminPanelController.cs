@@ -244,11 +244,41 @@ namespace Flocon.Controllers
             var resUpdate = _userManager.UpdateAsync(usrInfo).Result;
             if (resUpdate.Succeeded)
             {
-                _logger.LogInformation("User activity updated :: CompanyId={0} :: UserId={1} :: Activity={2}", compyid, usrid, usrInfo.IsActive.ToString());
+                _logger.LogInformation("User activity updated :: CompanyId={0} :: UserId={1} :: Activity={2}",
+                                        compyid, usrid, usrInfo.IsActive.ToString());
             }
             else
             {
-                _logger.LogWarning("User activity update Failed :: CompanyId={0} :: UserId={1} :: Activity={2}", compyid, usrid, usrInfo.IsActive.ToString());
+                _logger.LogWarning("User activity update failed :: CompanyId={0} :: UserId={1} :: Activity={2}",
+                                    compyid, usrid, usrInfo.IsActive.ToString());
+            }
+
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
+        }
+
+        [HttpPost]
+        public IActionResult ChangeUserGroup(string compyid, string usrid, IndexViewModel vm)
+        {
+            var usrInfo = _userManager.FindByIdAsync(usrid).Result;
+            var cmpny = _customersService.GetCompany(compyid);
+            if (cmpny == null)
+            {
+                _logger.LogWarning("Failed to update user, company not found :: CompanyId={0} :: UserId={1}", compyid, usrid);
+                return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
+            }
+
+            usrInfo.GroupId = vm.NewUser.GroupId;
+
+            var resUpdate = _userManager.UpdateAsync(usrInfo).Result;
+            if (resUpdate.Succeeded)
+            {
+                _logger.LogInformation("User group updated :: CompanyId={0} :: UserId={1} :: Group={2}",
+                                        compyid, usrid, usrInfo.GroupId);
+            }
+            else
+            {
+                _logger.LogWarning("User group update failed :: CompanyId={0} :: UserId={1} :: Group={2}",
+                                    compyid, usrid, usrInfo.GroupId);
             }
 
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
@@ -325,8 +355,8 @@ namespace Flocon.Controllers
                 var resRole = _userManager.AddToRoleAsync(myUser, "User").Result;
                 if (resRole.Succeeded == false)
                 {
-                    _logger.LogWarning("Failed to attribute User role to user at creation :: CompanyId={0} :: Name={1} :: Email={2} :: Pass={3} :: Group={4}",
-                                   cmpId, usrName, usrMail, usrPass, usrGroup);
+                    _logger.LogWarning("Failed to attribute User role at creation :: CompanyId={0} :: Name={1} :: Email={2} :: Pass={3} :: Group={4}",
+                                        cmpId, usrName, usrMail, usrPass, usrGroup);
                     return false;
                 }
             }

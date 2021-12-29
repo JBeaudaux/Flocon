@@ -142,10 +142,27 @@
                                 @foreach (var usr in Model.Users.FindAll(x => x.CompanyId == Model.NewCompany.Id))
                                 {
                                     <tr>
-                                        <td>@usr.UserName</td>
-                                        <td>@usr.Email</td>
-                                        <td>@usr.GroupId</td>
-                                        <td>
+                                        <td valign="middle">@usr.UserName</td>
+                                        <td valign="middle">@usr.Email</td>
+                                        <td valign="middle">
+                                            <form method="post" enctype="multipart/form-data" style="display: flex;"
+                                                  asp-action="ChangeUserGroup" asp-route-compyid="@usr.CompanyId" asp-route-usrid="@usr.Id">
+                                                <select class="form-control" asp-for="@Model.NewUser.GroupId" onchange="form.submit()">
+                                                    @foreach (var opt in Model.NewCompany.Groups)
+                                                    {
+                                                        @if (opt == usr.GroupId)
+                                                        {
+                                                            <option selected>@opt</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>@opt</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </form>
+                                        </td>
+                                        <td valign="middle" ali>
                                             <form method="post" enctype="multipart/form-data" style="display: flex;"
                                                   asp-action="ActivateUser" asp-route-compyid="@usr.CompanyId" asp-route-usrid="@usr.Id">
                                                 @if (usr.IsActive)
@@ -164,7 +181,7 @@
                                                 }
                                             </form>
                                         </td>
-                                        <td>ToDo</td>
+                                        <td valign="middle">ToDo</td>
                                       </tr>
                                 }
                             </tbody>
