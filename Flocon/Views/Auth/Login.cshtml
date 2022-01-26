@@ -158,7 +158,7 @@
   <!-- Moralis authentication -->
   <script>
       Moralis.initialize("mZUKiVs4n8XcNZwuq0riiTNAPP29CqdfevSVYYat")
-      Moralis.serverURL = "https://bcyyhqybnajd.usemoralis.com:2053/server"
+      Moralis.serverURL = "https://cors-anywhere.herokuapp.com/https://bcyyhqybnajd.usemoralis.com:2053/server"
 
       async function login()
       {
@@ -169,6 +169,7 @@
           inputH.value = MetamaskAddr;
 
           if(MetamaskAddr){
+              console.log("It works");
               console.log(MetamaskAddr);
           }
       }
