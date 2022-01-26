@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Flocon.Models.Auth.LoginViewModel
+@{
     Layout = ""; // No registration, no need for a template
     ViewData["Title"] = "Flocon - Login";
 }
@@ -17,8 +18,8 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="~/img/favicon.png" rel="icon">
+  <link rel="shortcut icon" href="~/img/favicon.png" />
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -77,10 +78,17 @@
                   
 
                     <div class="col-12">
+                        <form asp-controller="Auth" asp-action="MetamaskLogin">
+                            <input id="metamID" visibility="hidden" onchange="form.submit()" />
+                            <button type="submit">Test</button>
+                        </form>
+                      
                       <button class="btn btn-primary w-100" type="button" onclick="login()">
                         <i class="bx bxs-id-card" style="margin-right: 10px;"></i> Digital ID Login
                       </button>
                     </div>
+
+                    <!-- ToDo : use modal to select wallet (metamask, WalletConnect, Brave)-->
 
                     <hr>
 
@@ -152,11 +160,16 @@
       Moralis.initialize("mZUKiVs4n8XcNZwuq0riiTNAPP29CqdfevSVYYat")
       Moralis.serverURL = "https://bcyyhqybnajd.usemoralis.com:2053/server"
 
-      async function login(){
+      async function login()
+      {
           console.log("login clicked");
-          var user = await Moralis.Web3.authenticate();
-          if(user){
-              console.log(user);
+          var MetamaskAddr = await Moralis.Web3.authenticate();
+
+          var inputH = document.getElementById("metamID");
+          inputH.value = MetamaskAddr;
+
+          if(MetamaskAddr){
+              console.log(MetamaskAddr);
           }
       }
    </script>
