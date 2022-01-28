@@ -4,8 +4,6 @@
     ViewData["Title"] = "Flocon - Login";
 }
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -79,7 +77,7 @@
 
                     <div class="col-12">
                         <form asp-controller="Auth" asp-action="MetamaskLogin">
-                            <input id="metamID" visibility="hidden" onchange="form.submit()" />
+                            <input asp-for="@Model.MetamaskAddr" type="text" id="metamID" onchange="form.submit()" />
                             <button type="submit">Test</button>
                         </form>
                       
@@ -158,19 +156,23 @@
   <!-- Moralis authentication -->
   <script>
       Moralis.initialize("mZUKiVs4n8XcNZwuq0riiTNAPP29CqdfevSVYYat")
-      Moralis.serverURL = "https://cors-anywhere.herokuapp.com/https://bcyyhqybnajd.usemoralis.com:2053/server"
+      //Moralis.serverURL = "https://cors-anywhere.herokuapp.com/https://bcyyhqybnajd.usemoralis.com:2053/server"
+      Moralis.serverURL = "https://bcyyhqybnajd.usemoralis.com:2053/server"
 
       async function login()
       {
-          console.log("login clicked");
-          var MetamaskAddr = await Moralis.Web3.authenticate();
+          try {
+              //console.log("login clicked");
+              var user = await Moralis.Web3.authenticate();
 
-          var inputH = document.getElementById("metamID");
-          inputH.value = MetamaskAddr;
+              var inputH = document.getElementById("metamID");
+              inputH.value = user.id;
 
-          if(MetamaskAddr){
-              console.log("It works");
-              console.log(MetamaskAddr);
+              if(user){
+                  //console.log('user connected')
+              }
+          } catch (error) {
+              console.log('authenticate failed', error)
           }
       }
    </script>
