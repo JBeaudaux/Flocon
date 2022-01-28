@@ -45,7 +45,7 @@
             <div class="row" style="margin-top:20px;">
                 <div class="col-lg-4">
                 <h2 style="color:#899bbd;"><i class='bx bxs-user-account'></i></h2>
-                <h3 class="mb-0"><b>@Model.Users.Count(x => x.CompanyId == Model.NewCompany.Id && x.IsActive)</b></h3>
+                <h3 class="mb-0"><b>@Model.Users.Count(x => x.CompanyId == Model.NewCompany.Id && x.IsActive) / @Model.NewCompany.MaxUsers</b></h3>
                 <h6>Users</h6>
                 </div>
                 <div class="col-lg-4">
@@ -143,12 +143,127 @@
                 </div>
 
                 <div class="row">
+                <div class="col-lg-3 col-md-4 label">Last modified date</div>
+                <div class="col-lg-9 col-md-8">@Model.NewCompany.CreatedOn</div>
+                </div>
+
+                <div class="row">
                 <div class="col-lg-3 col-md-4 label">Creation date</div>
                 <div class="col-lg-9 col-md-8">@Model.NewCompany.CreatedOn</div>
                 </div>
             </div>
 
             <div class="tab-pane fade profile-edit pt-3" id="profile-users">
+                <h5 class="card-title"><i class="fas fa-user"></i> Users</h5>
+                @if (Model.Users.Find(x => x.CompanyId == Model.NewCompany.Id) == null)
+                {
+                    <h2>No user created yet!</h2>
+                }
+                else
+                {
+                    <table class="table">
+                    <thead>
+                        <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Group</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var usr in Model.Users.FindAll(x => x.CompanyId == Model.NewCompany.Id))
+                        {
+                            <tr>
+                                <td valign="middle">@usr.UserName</td>
+                                <td valign="middle">@usr.Email</td>
+                                <td valign="middle">
+                                    <form method="post" enctype="multipart/form-data" style="display: flex;"
+                                            asp-action="ChangeUserGroup" asp-route-compyid="@usr.CompanyId" asp-route-usrid="@usr.Id">
+                                        <select class="form-control" asp-for="@Model.NewUser.GroupId" onchange="form.submit()">
+                                            @foreach (var opt in Model.NewCompany.Groups)
+                                            {
+                                                @if (opt == usr.GroupId)
+                                                {
+                                                    <option selected>@opt</option>
+                                                }
+                                                else
+                                                {
+                                                    <option>@opt</option>
+                                                }
+                                            }
+                                        </select>
+                                    </form>
+                                </td>
+                                <td valign="middle" ali>
+                                    <form method="post" enctype="multipart/form-data" style="display: flex;"
+                                            asp-action="ActivateUser" asp-route-compyid="@usr.CompanyId" asp-route-usrid="@usr.Id">
+                                        @if (usr.IsActive)
+                                        {
+                                            <label class="switch">
+                                                <input type="checkbox" onchange="form.submit()" checked asp-for="@Model.NewUser.IsActive">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        }
+                                        else
+                                        {
+                                            <label class="switch">
+                                                <input type="checkbox" onchange="form.submit()" asp-for="@Model.NewUser.IsActive">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        }
+                                    </form>
+                                </td>
+                                <td valign="middle">
+                                    <a href="#" class="text-danger" style="margin-right: 10px;"><i class="fas fa-trash-alt"></i></a>
+                                    <a href="#" class="text-success"><i class="fas fa-edit"></i></a>
+                                </td>
+                                </tr>
+                        }
+                    </tbody>
+                    </table>
+                }
+
+                <!--<table class="table table-borderless table-striped table-advance table-hover datatable" id="dataTable">-->
+                <h5 class="card-title"><i class="fas fa-users"></i> Groups</h5>
+
+                @if (Model.NewCompany.Groups.Count() < 1)
+                {
+                    <h2>No group created yet!</h2>
+                }
+                else
+                {
+                    <div class="row centered">
+                        <table class="table">
+                        <thead>
+                            <tr>
+                            <th>Group</th>
+                            <th>Members</th>
+                            <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var gp in Model.NewCompany.Groups)
+                            {
+                                <tr>
+                                    <td>@gp</td>
+                                    <td>
+                                        @foreach (var usringp in Model.Users.FindAll(x => x.CompanyId == Model.NewCompany.Id && x.GroupId == gp))
+                                        {
+                                            <p style="margin-bottom: 0px;">@usringp.UserName</p> 
+                                        }
+                                    </td>
+                                    <td valign="middle">
+                                        <a href="#" class="text-danger" style="margin-right: 10px;"><i class="fas fa-trash-alt"></i></a>
+                                        <a href="#" class="text-success"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        </table>
+
+                    </div>
+                }
             </div>
 
             <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
