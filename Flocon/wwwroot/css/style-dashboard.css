@@ -15,6 +15,7 @@
 body {
   font-family: "Open Sans", sans-serif;
   background: #f6f9ff;
+  background: #f6f9ff;
   color: #444444;
 }
 
@@ -31,6 +32,8 @@ a:hover {
 h1, h2, h3, h4, h5, h6 {
   font-family: "Nunito", sans-serif;
 }
+
+
 
 /*--------------------------------------------------------------
 # Main

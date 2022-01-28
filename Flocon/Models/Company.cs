@@ -20,6 +20,7 @@ namespace Flocon.Models
         public string ContactPhone { get; set; }
         public string ContactAddress { get; set; }
         public string ContactWebpage { get; set; }
+        public string ContactLinkedin { get; set; }
 
         /*------------ LICENCE ------------*/
         public string LicenceType { get; set; }
