@@ -37,7 +37,7 @@
 
                 @if (Model.Companies.Count() == 0)
                 {
-                    <h1 align="center">No companies registered yet.</h1>
+                    <h5 class="card-title" align="center">No companies registered yet.</h5>
                 }
                 else
                 {
@@ -46,8 +46,10 @@
                     <tr>
                         <th scope="col">Company name</th>
                         <th scope="col">Contact mail</th>
-                        <th scope="col">Licence status</th> <!-- Active (x days remaining, x/y active users) / Expired (since x days) -->
-                        <th scope="col">Licenced users</th>
+                        <th scope="col">Licence status</th>
+                        <th scope="col">Licence settings</th>
+                        <th scope="col">Active users</th>
+                        <th scope="col">User licences</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,11 +60,13 @@
                                 <a class="rounded-circle mr-3" asp-action="CompanyProfile" asp-route-id="@cmp.Id">
                                 @if (string.IsNullOrEmpty(cmp.LogoPath))
                                 {
-                                    <img src="~/img/Unknown-user.png" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px;">
+                                    <img src="~/img/Unknown-user.png" alt="Profile" class="rounded-circle"
+                                         style="width: 40px; height: 40px;">
                                 }
                                 else
                                 {
-                                    <img src="~/img/companies/@cmp.LogoPath" alt="Profile" class="rounded-circle" style="width: 40px; height: 40px;">
+                                    <img src="~/img/companies/@cmp.LogoPath" alt="Profile" class="rounded-circle"
+                                         style="width: 40px; height: 40px;">
                                 }
                                 @Html.DisplayFor(modelItem => cmp.CompanyName)
                                 </a>
@@ -97,11 +101,25 @@
                                     </div>
                                 }
                             </td>
+                            <td>
+                                <a class="textinfo" title="Disable licence" style="margin-right: 10px;"
+                                   asp-action="DisableLicence" asp-route-id="@cmp.Id">
+                                    <i class="fas fa-tint"></i>
+                                </a>
+                                <a class="textinfo" title="Demo licence (1 month)" style="margin-right: 10px;"
+                                   asp-action="RenewLicenceTrial" asp-route-id="@cmp.Id">
+                                    <i class="fas fa-snowman"></i>
+                                </a>
+                                <a class="text-success" title="Full licence (1 year)"
+                                   asp-action="RenewLicenceYearly" asp-route-id="@cmp.Id">
+                                    <i class="fas fa-snowboarding"></i>
+                                </a>
+                            </td>
                             <td valign="middle">
-                                @{
-                                    var usr = Model.Users.Count(x => x.CompanyId == cmp.Id && x.IsActive);
-                                    <span>@usr / @cmp.MaxUsers</span>
-                                }
+                                @*<span>@Model.Users.Count(x => x.CompanyId == cmp.Id && x.IsActive)</span>*@
+                            </td>
+                            <td>
+                                <span>@cmp.MaxUsers</span>
                             </td>
                         </tr>
                     }
