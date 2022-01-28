@@ -13,6 +13,8 @@ namespace Flocon.Controllers
         private readonly SignInManager<UserFlocon> _signInManager;
         private readonly ILogger<HomeController> _logger;
 
+        private LoginViewModel _loginViewModel;
+
         public AuthController(UserManager<UserFlocon> userManager,
                               RoleManager<MongoRole> roleManager,
                               SignInManager<UserFlocon> signInManager,
@@ -47,16 +49,17 @@ namespace Flocon.Controllers
                 return RedirectToAction("Index", "Dashboard");
             }*/
 
-            var vm = new LoginViewModel();
-            vm.MetamaskAddr = "";
+            _loginViewModel = new LoginViewModel();
+            _loginViewModel.MetamaskAddr = "";
 
-            return View(vm);
+            return View(_loginViewModel);
         }
 
         [HttpPost]
-        public IActionResult MetamaskLogin(LoginViewModel vm)
+        public IActionResult MetamaskLogin(LoginViewModel loginViewModel)
         {
-            return View("login");
+            //return View("index", "Dashboard");
+            return RedirectToAction("Index", "Dashboard");
         }
 
         // Used to capture the login
@@ -64,10 +67,8 @@ namespace Flocon.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel vm)
         {
-
             return RedirectToAction("Login", "Auth");
         }*/
-
 
         /*
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
