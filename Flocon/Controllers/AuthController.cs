@@ -1,5 +1,6 @@
 ﻿using AspNetCore.Identity.Mongo.Model;
 using Flocon.Models;
+using Flocon.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -46,7 +47,16 @@ namespace Flocon.Controllers
                 return RedirectToAction("Index", "Dashboard");
             }*/
 
-            return View();
+            var vm = new LoginViewModel();
+            vm.MetamaskAddr = "";
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public IActionResult MetamaskLogin(LoginViewModel vm)
+        {
+            return View("login");
         }
 
         // Used to capture the login

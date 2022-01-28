@@ -5,6 +5,7 @@ using Flocon.Models.AdminPanel;
 using Flocon.Services.FileManager;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Flocon.Controllers
 {
@@ -34,7 +35,7 @@ namespace Flocon.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var vm = new IndexViewModel();
             vm.Users = _userManager.Users.ToList();
@@ -42,6 +43,9 @@ namespace Flocon.Controllers
             vm.Companies = _customersService.GetCompaniesList();
 
             vm.NewCompany = new Company();
+
+            var connectedUser = await GetConnectedUser();
+            
 
             return View(vm);
         }
@@ -57,6 +61,7 @@ namespace Flocon.Controllers
             vm.Companies = _customersService.GetCompaniesList();
 
             vm.NewCompany = _customersService.GetCompany(id);
+            vm.NewUsrPass = GetRandomPassword();
 
             return View(vm);
         }
@@ -95,7 +100,8 @@ namespace Flocon.Controllers
             }
             else
             {
-                _logger.LogInformation(String.Format("Failed registration for company {0} :: CompanyId={1}", vm.NewCompany.CompanyName, vm.NewCompany.Id));
+                _logger.LogInformation(String.Format("Failed registration for company {0} :: CompanyId={1}",
+                                                      vm.NewCompany.CompanyName, vm.NewCompany.Id));
             }
 
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = cmp.Id });
@@ -169,6 +175,208 @@ namespace Flocon.Controllers
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
         }
 
+        [HttpPost]
+        public IActionResult CreateUser(string compyid, IndexViewModel vm)
+        {
+            CreateNewUser(compyid, vm.NewUser.UserName, vm.NewUser.FirstName, vm.NewUser.LastName, vm.NewUser.Email, vm.NewUsrPass, "", false);
+
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
+        }
+
+        [HttpPost]
+        public IActionResult CreateUsersFromCSV(string compyid, IndexViewModel vm)
+        {
+            // ToDo : Add controls to ensure that bad file or format are managed
+            try
+            {
+                if (vm.NewUsrCSV == null)
+                {
+                    throw new FileNotFoundException("CSV file not found for users import");
+                }
+
+                using (var reader = new StreamReader(vm.NewUsrCSV.OpenReadStream()))
+                {
+                    string[] splitted;
+                    // Skip header line
+                    string? l = reader.ReadLine();
+                    l = reader.ReadLine();
+                    while (!string.IsNullOrEmpty(l))
+                    {
+                        splitted = l.Split(",");
+                        if (splitted.Count() != 7)
+                        {
+                            throw new FormatException("CSV file format invalid for users import : Incorrect number of elements");
+                        }
+
+                        bool activateUsr = splitted[6].ToLower() == "yes";
+                        CreateNewUser(compyid, splitted[0], splitted[1], splitted[2], splitted[3], splitted[4], splitted[5], activateUsr);
+
+                        _logger.LogInformation("ParseCSV : Username={0} :: Email={1} :: Password={2} :: Group={3} :: Active={4}",
+                                                splitted[0], splitted[3], splitted[4], splitted[5], splitted[6]);
+                        l = reader.ReadLine();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
+            }
+            
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
+        }
+
+        [HttpPost]
+        public IActionResult ActivateUser(string compyid, string usrid, IndexViewModel vm)
+        {
+            var usrInfo = _userManager.FindByIdAsync(usrid).Result;
+            var cmpny = _customersService.GetCompany(compyid);
+            if (cmpny == null)
+            {
+                _logger.LogWarning("Failed to update user, company not found :: CompanyId={0} :: UserId={1}", compyid, usrid);
+                return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
+            }
+
+            var nbUsrs = _userManager.Users.ToList().FindAll(x => x.IsActive == true).Count();
+            if (vm.NewUser.IsActive && nbUsrs >= cmpny.MaxUsers)
+            {
+                _logger.LogWarning("Failed to update user, too many active users :: CompanyId={0} :: UserId={1}", compyid, usrid);
+                return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
+            }
+
+            usrInfo.IsActive = vm.NewUser.IsActive;
+
+            var resUpdate = _userManager.UpdateAsync(usrInfo).Result;
+            if (resUpdate.Succeeded)
+            {
+                _logger.LogInformation("User activity updated :: CompanyId={0} :: UserId={1} :: Activity={2}",
+                                        compyid, usrid, usrInfo.IsActive.ToString());
+            }
+            else
+            {
+                _logger.LogWarning("User activity update failed :: CompanyId={0} :: UserId={1} :: Activity={2}",
+                                    compyid, usrid, usrInfo.IsActive.ToString());
+            }
+
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
+        }
+
+        [HttpPost]
+        public IActionResult ChangeUserGroup(string compyid, string usrid, IndexViewModel vm)
+        {
+            var usrInfo = _userManager.FindByIdAsync(usrid).Result;
+            var cmpny = _customersService.GetCompany(compyid);
+            if (cmpny == null)
+            {
+                _logger.LogWarning("Failed to update user, company not found :: CompanyId={0} :: UserId={1}", compyid, usrid);
+                return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
+            }
+
+            usrInfo.GroupId = vm.NewUser.GroupId;
+
+            var resUpdate = _userManager.UpdateAsync(usrInfo).Result;
+            if (resUpdate.Succeeded)
+            {
+                _logger.LogInformation("User group updated :: CompanyId={0} :: UserId={1} :: Group={2}",
+                                        compyid, usrid, usrInfo.GroupId);
+            }
+            else
+            {
+                _logger.LogWarning("User group update failed :: CompanyId={0} :: UserId={1} :: Group={2}",
+                                    compyid, usrid, usrInfo.GroupId);
+            }
+
+            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
+        }
+
+        /// <summary>
+        /// Creates a new user in the database. User will have a "USER" role
+        /// </summary>
+        /// <param name="cmpId">ID of the company the user it employed by</param>
+        /// <param name="usrName">Full name of the user</param>
+        /// <param name="usrMail">Email address of the user</param>
+        /// <param name="usrPass">Password of the account to create. If void, the default password will be assigned</param>
+        /// <param name="usrGroup">The company group to assign the user to</param>
+        /// <param name="active">Wether the user should be activated</param>
+        /// <returns></returns>
+        private bool CreateNewUser(string cmpId, string usrName, string firstName, string lastName, string usrMail, string usrPass,
+                                   string usrGroup, bool active)
+        {
+            if (string.IsNullOrEmpty(cmpId) || string.IsNullOrEmpty(usrName) || string.IsNullOrEmpty(usrMail))
+            {
+                // ToDo : Make validation of elements
+                return false;
+            }
+
+            // ToDo : Test Metamask Addr as well
+            if (_userManager.Users.Any(u => u.Email == usrMail))
+            {
+                _logger.LogWarning("Cannot create user, already exists :: CompanyId={0} :: Name={1} :: Email={2}", cmpId, usrName, usrMail);
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(usrPass))
+            {
+                usrPass = "NancyFlocon&2021";
+            }
+
+            var cmpny = _customersService.GetCompany(cmpId);
+            if (cmpny == null)
+            {
+                _logger.LogWarning("Failed to create user, company not found :: CompanyId={0} :: Name={1} :: Email={2}", cmpId, usrName, usrMail);
+                return false;
+            }
+
+            var myUser = new UserFlocon { UserName = usrName, FirstName=firstName, LastName=lastName, Email = usrMail, CompanyId = cmpId};
+            if (!string.IsNullOrEmpty(usrGroup))
+            {
+                // Assign group
+                if (cmpny.Groups.Contains(usrGroup))
+                {
+                    myUser.GroupId = usrGroup;
+                }
+                else
+                {
+                    _logger.LogWarning("Failed to assign group to user, group not found :: CompanyId={0} :: Name={1} :: Email={2} :: Group={3}", 
+                                        cmpId, usrName, usrMail, usrGroup);
+                    myUser.GroupId = "";
+                }
+            }
+
+            var nbUsrs = _userManager.Users.ToList().FindAll(x => x.IsActive == true).Count();
+            if (active && nbUsrs >= cmpny.MaxUsers)
+            {
+                _logger.LogWarning("Too many active users, set to inactive :: CompanyId={0} :: Name={1} :: Email={2}", cmpId, usrName, usrMail);
+                myUser.IsActive = false;
+            }
+            else
+            {
+                myUser.IsActive = active;
+            }
+
+            var resCreate = _userManager.CreateAsync(myUser, usrPass).Result;
+            if (resCreate.Succeeded)
+            {
+                var resRole = _userManager.AddToRoleAsync(myUser, "User").Result;
+                if (resRole.Succeeded == false)
+                {
+                    _logger.LogWarning("Failed to attribute User role at creation :: CompanyId={0} :: Name={1} :: Email={2} :: Pass={3} :: Group={4}",
+                                        cmpId, usrName, usrMail, usrPass, usrGroup);
+                    return false;
+                }
+            }
+            else
+            {
+                _logger.LogWarning("Failed to create user :: CompanyId={0} :: Name={1} :: Email={2} :: Pass={3} :: Group={4}",
+                                   cmpId, usrName, usrMail, usrPass, usrGroup);
+                return false;
+            }
+
+            _logger.LogInformation("User created :: CompanyId={0} :: Name={1} :: Email={2} :: Pass={3} :: Group={4} :: Active={5}",
+                                   myUser.CompanyId, myUser.UserName, myUser.Email, usrPass, myUser.GroupId, myUser.IsActive.ToString());
+
+            return true;
+        }
+
         // ToDo : Move to a "common" library
         /// <summary>
         /// Builds a random password for new users. Has 12 characters (3 upper case letters, 3 lower case letters, 3 digits, and 3 special characters)
@@ -209,6 +417,18 @@ namespace Flocon.Controllers
             string rand = new string(pwdChars.OrderBy(x => Guid.NewGuid()).ToArray());
             
             return rand;
+        }
+
+        /// <summary>
+        /// Gets the user currently connected to display user infos
+        /// </summary>
+        /// <returns>Currently connected user or null if none connected</returns>
+        public async Task<UserFlocon> GetConnectedUser()
+        {
+            ClaimsPrincipal currentUser = this.User;
+            var usr = await _userManager.GetUserAsync(User);
+
+            return usr;
         }
 
         /*

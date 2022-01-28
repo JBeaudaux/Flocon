@@ -5,6 +5,348 @@
     ViewData["Title"] = "Admin panel";
 }
 
+<div class="pagetitle">
+    <h1>Admin panel</h1>
+    <nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index"><i class="bx bxs-home"></i></a></li>
+        <li class="breadcrumb-item"><a asp-controller="AdminPanel" asp-action="Index">Admin Panel</a></li>
+        <li class="breadcrumb-item active">@Model.NewCompany.CompanyName</li>
+    </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section profile">
+    <div class="row">
+    <div class="col-xl-4">
+
+        <div class="card">
+        <div class="card-body profile-card pt-4 text-center align-items-center">
+        <!--<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">-->
+
+            @if (string.IsNullOrEmpty(Model.NewCompany.LogoPath))
+            {
+                <img src="~/img/Unknown-user.png" alt="Profile" class="rounded-circle">
+            }
+            else
+            {
+                <img src="~/img/companies/@Model.NewCompany.LogoPath" alt="Profile" class="rounded-circle">
+            }
+
+            <h2>@Model.NewCompany.CompanyName</h2>
+            <h3>@Model.NewCompany.BusinessField</h3>
+            <div class="social-links mt-2">
+            <a href="@Model.NewCompany.ContactAddress" class="twitter"><i class="bi bi-envelope-open-fill"></i></a>
+            <a href="@Model.NewCompany.ContactWebpage" class="twitter"><i class="bi bi-link-45deg"></i></a>
+            <a href="@Model.NewCompany.ContactLinkedin" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            </div>
+
+            <div class="text-center">
+            <div class="row" style="margin-top:20px;">
+                <div class="col-lg-4">
+                <h2 style="color:#899bbd;"><i class='bx bxs-user-account'></i></h2>
+                <h3 class="mb-0"><b>@Model.Users.Count(x => x.CompanyId == Model.NewCompany.Id && x.IsActive)</b></h3>
+                <h6>Users</h6>
+                </div>
+                <div class="col-lg-4">
+                <h2 style="color:#899bbd;"><i class='bx bx-sitemap'></i></h2>
+                <h3 class="mb-0"><b>@Model.NewCompany.Groups.Count()</b></h3>
+                <h6>Groups</h6>
+                </div>
+                <div class="col-lg-4">
+                <h2 style="color:#899bbd;"><i class='bx bx-calendar-star'></i></h2>
+                <h3 class="mb-0"><b>@((int) (Model.NewCompany.LicenceExpiry - DateTime.Now).TotalDays)</b></h3>
+                <h6>Days left</h6>
+                </div>
+            </div>
+            <div class="row" style="margin-top:10px;">
+                <div class="col-lg-4">
+                <h2 style="color:#899bbd;"><i class='bx bx-file'></i></h2>
+                <h3 class="mb-0"><b>10</b></h3>
+                <h6>Documents</h6>
+                </div>
+                <div class="col-lg-4">
+                <h2 style="color:#899bbd;"><i class='bx bxs-pen'></i></h2>
+                <h3 class="mb-0"><b>4</b></h3>
+                <h6>Signatures</h6>
+                </div>
+                <div class="col-lg-4">
+                <h2 style="color:#899bbd;"><i class='bx bxs-calendar'></i></h2>
+                <h3 class="mb-0"><b>@( (int) (DateTime.Now - Model.NewCompany.CreatedOn).TotalDays)</b></h3>
+                <h6>Days of use</h6>
+                </div>
+            </div>
+            </div>              
+        </div>
+        </div>
+    </div>
+
+    <div class="col-xl-8">
+
+        <div class="card">
+        <div class="card-body pt-3">
+            <!-- Bordered Tabs -->
+            <ul class="nav nav-tabs nav-tabs-bordered">
+
+            <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-users">Users & Groups</button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+            </li>
+
+            </ul>
+            <div class="tab-content pt-2">
+
+            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                <h5 class="card-title">About</h5>
+                <p class="small fst-italic">@Model.NewCompany.Description</p>
+
+                <h5 class="card-title">Profile Details</h5>
+
+                <div class="row">
+                <div class="col-lg-3 col-md-4 label ">Contact</div>
+                <div class="col-lg-9 col-md-8">@Model.NewCompany.ContactName</div>
+                </div>
+
+                <div class="row">
+                <div class="col-lg-3 col-md-4 label ">Address</div>
+                <div class="col-lg-9 col-md-8">@Model.NewCompany.ContactAddress</div>
+                </div>
+
+                <div class="row">
+                <div class="col-lg-3 col-md-4 label">Mail</div>
+                <div class="col-lg-9 col-md-8">@Model.NewCompany.ContactMail</div>
+                </div>
+
+                <div class="row">
+                <div class="col-lg-3 col-md-4 label">Phone</div>
+                <div class="col-lg-9 col-md-8">@Model.NewCompany.ContactPhone</div>
+                </div>
+
+                <div class="row">
+                <div class="col-lg-3 col-md-4 label">Address</div>
+                <div class="col-lg-9 col-md-8">@Model.NewCompany.ContactAddress</div>
+                </div>
+
+                <div class="row">
+                <div class="col-lg-3 col-md-4 label">Creation date</div>
+                <div class="col-lg-9 col-md-8">@Model.NewCompany.CreatedOn</div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade profile-edit pt-3" id="profile-users">
+            </div>
+
+            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                <!-- Profile Edit Form -->
+                <form>
+                <div class="row mb-3">
+                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                    <div class="col-md-8 col-lg-9">
+                    <img src="assets/img/profile-img.jpg" alt="Profile">
+                    <div class="pt-2">
+                        <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
+                        <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                    <div class="col-md-8 col-lg-9">
+                    <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="company" type="text" class="form-control" id="company" value="Lueilwitz, Wisoky and Leuschke">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="country" type="text" class="form-control" id="Country" value="USA">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+                </form><!-- End Profile Edit Form -->
+
+            </div>
+
+            <div class="tab-pane fade pt-3" id="profile-settings">
+
+                <!-- Settings Form -->
+                <form>
+
+                <div class="row mb-3">
+                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
+                    <div class="col-md-8 col-lg-9">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="changesMade" checked>
+                        <label class="form-check-label" for="changesMade">
+                        Changes made to your account
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="newProducts" checked>
+                        <label class="form-check-label" for="newProducts">
+                        Information on new products and services
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="proOffers">
+                        <label class="form-check-label" for="proOffers">
+                        Marketing and promo offers
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
+                        <label class="form-check-label" for="securityNotify">
+                        Security alerts
+                        </label>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+                </form><!-- End settings Form -->
+
+            </div>
+
+            <div class="tab-pane fade pt-3" id="profile-change-password">
+                <!-- Change Password Form -->
+                <form>
+
+                <div class="row mb-3">
+                    <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="password" type="password" class="form-control" id="currentPassword">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="newpassword" type="password" class="form-control" id="newPassword">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                    <div class="col-md-8 col-lg-9">
+                    <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Change Password</button>
+                </div>
+                </form><!-- End Change Password Form -->
+
+            </div>
+
+            </div><!-- End Bordered Tabs -->
+
+        </div>
+        </div>
+
+    </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+@*
 <div class="row mt">
     <div class="col-lg-12">
         <div class="row content-panel">
@@ -58,8 +400,8 @@
                           <div class="row centered mt mb">
                           <div class="col-sm-4">
                             <h1><i class='bx bxs-user-account'></i></h1>
-                            <h3>@Model.Users.Count(x => x.CompanyId == Model.NewCompany.Id)</h3>
-                            <h6>USERS</h6>
+                            <h3>@Model.Users.Count(x => x.CompanyId == Model.NewCompany.Id && x.IsActive)</h3>
+                            <h6>ACTIVE USERS</h6>
                           </div>
                           <div class="col-sm-4">
                             <h1><i class='bx bx-sitemap'></i></h1>
@@ -131,30 +473,86 @@
                             <table class="table">
                             <thead>
                               <tr>
-                                <th>Name</th>
+                                <th>ID</th>
                                 <th>Email</th>
-                                <th>Groups</th>
+                                <th>Group</th>
                                 <th>Status</th>
+                                <th>Actions</th>
                               </tr>
                             </thead>
                             <tbody>
                                 @foreach (var usr in Model.Users.FindAll(x => x.CompanyId == Model.NewCompany.Id))
                                 {
                                     <tr>
-                                        <td>@usr.UserName</td>
-                                        <td>@usr.Email</td>
-                                        <td>ToDo</td>
-                                        <td>ToDo</td>
+                                        <td valign="middle">@usr.UserName</td>
+                                        <td valign="middle">@usr.Email</td>
+                                        <td valign="middle">
+                                            <form method="post" enctype="multipart/form-data" style="display: flex;"
+                                                  asp-action="ChangeUserGroup" asp-route-compyid="@usr.CompanyId" asp-route-usrid="@usr.Id">
+                                                <select class="form-control" asp-for="@Model.NewUser.GroupId" onchange="form.submit()">
+                                                    @foreach (var opt in Model.NewCompany.Groups)
+                                                    {
+                                                        @if (opt == usr.GroupId)
+                                                        {
+                                                            <option selected>@opt</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option>@opt</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </form>
+                                        </td>
+                                        <td valign="middle" ali>
+                                            <form method="post" enctype="multipart/form-data" style="display: flex;"
+                                                  asp-action="ActivateUser" asp-route-compyid="@usr.CompanyId" asp-route-usrid="@usr.Id">
+                                                @if (usr.IsActive)
+                                                {
+                                                    <label class="switch">
+                                                      <input type="checkbox" onchange="form.submit()" checked asp-for="@Model.NewUser.IsActive">
+                                                      <span class="slider round"></span>
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="switch">
+                                                      <input type="checkbox" onchange="form.submit()" asp-for="@Model.NewUser.IsActive">
+                                                      <span class="slider round"></span>
+                                                    </label>
+                                                }
+                                            </form>
+                                        </td>
+                                        <td valign="middle">ToDo</td>
                                       </tr>
                                 }
                             </tbody>
                           </table>
                         }
 
-                          <div>
-                            <button class="btn btn-theme" type="button" style="margin-bottom: 20px;">
-                                <i class='bx bx-user-plus' ></i> Create new users
-                            </button>
+                          <div class="d-flex align-items-center justify-content-center" style="marginbottom: 20px;">
+                              <form method="post" enctype="multipart/form-data" style="display: flex;"
+                                    asp-action="CreateUsersFromCSV" asp-route-compyid="@Model.NewCompany.Id">
+                                  <label style="display: block; width: 60vw; max-width: 200px; margin-right:20px;
+                                                background-color: green; border-radius: 2px; font-size: 1em;
+                                                line-height: 2.5em; text-align: center; color: white;">
+                                      <input type="file" accept=".csv" asp-for="@Model.NewUsrCSV" onchange="form.submit()"
+                                             style="border: 0; clip: rect(1px, 1px, 1px, 1px); height: 1px; margin: -1px;
+                                                    overflow: hidden; padding: 0; position: absolute; width: 1px;">
+                                      <i class="fas fa-file-csv"></i> Add users from CSV    
+                                  </label>
+
+                                  <button class="btn btn-theme" alt="Create new users" data-bs-toggle="modal" data-bs-target="#CreateUsers" 
+                                          type="button">
+                                      <i class='bx bx-user-plus'></i> Create a new user
+                                  </button>
+                              </form>
+
+                            <!--
+                            <button class="btn btn-success" alt="Create new users" type="button" style="margin-bottom:20px">
+                                <i class='bx bxs-file-json'></i> Add users from file
+                            </button>-->
+                            
                           </div>
                           
                           <br>
@@ -342,13 +740,57 @@
     </div>
 </div>
 
+<div class="modal fade" id="CreateUsers" tabindex="-1" aria-labelledby="CreateUsers" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create new users</h5>
+                <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+            </div>
+
+            <form role="form" class="form-horizontal" asp-action="CreateUser" asp-route-compyid="@Model.NewCompany.Id"
+                  method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="mb-3">
+                            <label asp-for="@Model.NewUser.UserName" class="col-form-label">User identifier</label>
+                            <input asp-for="@Model.NewUser.UserName" type="text" class="form-control" >
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.NewUser.FirstName" class="col-form-label">First name</label>
+                            <input asp-for="@Model.NewUser.FirstName" type="text" class="form-control" >
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.NewUser.LastName" class="col-form-label">Last name</label>
+                            <input asp-for="@Model.NewUser.LastName" type="text" class="form-control" >
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.NewUser.Email" class="col-form-label">User mail</label>
+                            <input asp-for="@Model.NewUser.Email" type="text" class="form-control" >
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="@Model.NewUsrPass" class="col-form-label">Password</label>
+                            <input asp-for="@Model.NewUsrPass" type="text" class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" alt="Cancel">Cancel</button>
+                    <button class="btn btn-theme" type="submit" alt="Create group">Create users</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="CreateGroup" tabindex="-1" aria-labelledby="CreateGroup" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Create a new group</h5>
-                @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
+                <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
             </div>
 
             <form role="form" class="form-horizontal" asp-action="CreateGroup" asp-route-id="@Model.NewCompany.Id" method="post" enctype="multipart/form-data">
@@ -377,7 +819,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Remove company</h5>
-                @*<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>*@
+                <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
             </div>
         
             <div class="modal-body">
@@ -396,3 +838,4 @@
         </div>
     </div>
 </div>
+*@

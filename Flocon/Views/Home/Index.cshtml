@@ -4,6 +4,7 @@
     Layout = ""; // Nothing, as the landing page is unique
 }
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Flocon - The transparent electronic signature system</title>
+  <title>Flocon.io - The transparent electronic signature system</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -19,31 +20,30 @@
   <link href="~/img/favicon.png" rel="icon">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
+  <link href="~/lib/aos/aos.css" rel="stylesheet">
   <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="~/lib/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="~/lib/fontawesome-5.15.1/css/all.css" rel="stylesheet" />
   <link href="~/lib/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="~/lib/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="~/lib/remixicon/remixicon.css" rel="stylesheet">
   <link href="~/lib/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Template Main CSS File -->
-  <link href="~/css/landing.css" rel="stylesheet">
+  <link href="~/css/style-landing.css?rnd=345" rel="stylesheet">
 
 </head>
 
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="fixed-top ">
+  <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center justify-content-between">
 
       <h1 class="logo">
-        <i class="fas fa-snowflake" width="30px"></i>
-        Flocon<span>.io</span>
+        <i class="bi bi-snow2"></i> <a href="index-flocon.html">Flocon<span style="color:#2487ce;">.io</span></a>
       </h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
@@ -52,10 +52,10 @@
         <ul>
           <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
           <li><a class="nav-link scrollto" href="#about">About</a></li>
-          <li><a class="nav-link scrollto" href="#tech">Tech</a></li>
-          <li><a class="nav-link scrollto" href="#faq">F.A.Q</a></li>
           <li><a class="nav-link scrollto" href="#team">Team</a></li>
+          <li><a class="nav-link scrollto" href="#faq">F.A.Q.</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="getstarted scrollto" href="./Auth/login">Log in</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -64,13 +64,74 @@
   </header><!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
-  <section id="hero">
-    <div class="hero-container">
-      <h3>Welcome to <strong>Flocon<span style="color: #D4674C;">.io</span></strong></h3>
-      <h1>Electronic signature, made transparent</h1>
-      <h2>Keep control of your document electronic signatures with the blockchain</h2>
-      <!-- ToDo : Change it when auth is done -->
-      <a href="./Auth/login" class="btn-get-started scrollto">Get Started</a>
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+      <div class="row justify-content-center">
+        <div class="col-xl-7 col-lg-9 text-center">
+          <h1><i class="bi bi-snow2"></i> Flocon<span style="color:#2487ce;">.io</span></h1>
+          <!--<h2>Keep full control of your document electronic signatures</h2>-->
+          <h2>Electronic signature made fully transparent</h2>
+        </div>
+      </div>
+      <div class="text-center">
+        <a href="#cta" class="btn-get-started scrollto">Get Started</a>
+      </div>
+
+      <div class="row icon-boxes" style="text-align: center;">
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="200">
+          <div class="icon-box iconbox-blue">
+            <div class="icon" style="width: 100px; height: 100px; position: relative;">
+              <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                <path stroke="none" stroke-width="0" fill="#f5f5f5" d="M300,521.0016835830174C376.1290562159157,517.8887921683347,466.0731472004068,529.7835943286574,510.70327084640275,468.03025145048787C554.3714126377745,407.6079735673963,508.03601936045806,328.9844924480964,491.2728898941984,256.3432110539036C474.5976632858925,184.082847569629,479.9380746630129,96.60480741107993,416.23090153303,58.64404602377083C348.86323505073057,18.502131276798302,261.93793281208167,40.57373210992963,193.5410806939664,78.93577620505333C130.42746243093433,114.334589627462,98.30271207620316,179.96522072025542,76.75703585869454,249.04625023123273C51.97151888228291,328.5150500222984,13.704378332031375,421.85034740162234,66.52175969318436,486.19268352777647C119.04800174914682,550.1803526380478,217.28368757567262,524.383925680826,300,521.0016835830174"></path>
+              </svg>
+              <i class="ri-fingerprint-line" style="position: absolute; left: 30px; bottom: 20px;"></i>
+            </div>
+
+            <h4 class="title"><a href="">Unforgeable</a></h4>
+            <p class="description">We rely on blockchain technology for signatories authentication, document information storage and proof-of-signature. All signatures are thus guaranteed unforgeable, even by us!</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="300">
+          <div class="icon-box">
+            <div class="icon" style="width: 100px; height: 100px; position: relative;">
+              <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                <path stroke="none" stroke-width="0" fill="#f5f5f5" d="M300,582.0697525312426C382.5290701553225,586.8405444964366,449.9789794690241,525.3245884688669,502.5850820975895,461.55621195738473C556.606425686781,396.0723002908107,615.8543463187945,314.28637112970534,586.6730223649479,234.56875336149918C558.9533121215079,158.8439757836574,454.9685369536778,164.00468322053177,381.49747125262974,130.76875717737553C312.15926192815925,99.40240125094834,248.97055460311594,18.661163978235184,179.8680185752513,50.54337015887873C110.5421016452524,82.52863877960104,119.82277516462835,180.83849132639028,109.12597500060166,256.43424936330496C100.08760227029461,320.3096726198365,92.17705696193138,384.0621239912766,124.79988738764834,439.7174275375508C164.83382741302287,508.01625554203684,220.96474134820875,577.5009287672846,300,582.0697525312426"></path>
+              </svg>
+              <i class="bx bx-search-alt" style="position: absolute; left: 30px; bottom: 20px;"></i>
+            </div>
+            <h4 class="title"><a href="">Auditable</a></h4>
+            <p class="description">Flocon is open and can be audited independantly from us. All signature information is stored as transactions on the blockchain, that can be verified at any time with full transparency.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="400">
+          <div class="icon-box">
+            <div class="icon" style="width: 100px; height: 100px; position: relative;">
+              <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                <path stroke="none" stroke-width="0" fill="#f5f5f5" d="M300,532.3542879108572C369.38199826031484,532.3153073249985,429.10787420159085,491.63046689027357,474.5244479745417,439.17860296908856C522.8885846962883,383.3225815378663,569.1668002868075,314.3205725914397,550.7432151929288,242.7694973846089C532.6665558377875,172.5657663291529,456.2379748765914,142.6223662098291,390.3689995646985,112.34683881706744C326.66090330228417,83.06452184765237,258.84405631176094,53.51806209861945,193.32584062364296,78.48882559362697C121.61183558270385,105.82097193414197,62.805066853699245,167.19869350419734,48.57481801355237,242.6138429142374C34.843463184063346,315.3850353017275,76.69343916112496,383.4422959591041,125.22947124332185,439.3748458443577C170.7312796277747,491.8107796887764,230.57421082200815,532.3932930995766,300,532.3542879108572"></path>
+              </svg>
+              <i class="bx bx-shield-quarter" style="position: absolute; left: 30px; bottom: 20px;"></i>
+            </div>
+            <h4 class="title"><a href="">Secure</a></h4>
+            <p class="description">The distributed nature of the blockchain ensures that all information stored in it will remain forever, immutable and indelebile. Also, documents can only be accessed by those you want to.</p>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0" data-aos="zoom-in" data-aos-delay="500">
+          <div class="icon-box">
+            <div class="icon" style="width: 100px; height: 100px; position: relative;">
+              <svg width="100" height="100" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                <path stroke="none" stroke-width="0" fill="#f5f5f5" d="M300,566.797414625762C385.7384707136149,576.1784315230908,478.7894351017131,552.8928747891023,531.9192734346935,484.94944893311C584.6109503024035,417.5663521118492,582.489472248146,322.67544863468447,553.9536738515405,242.03673114598146C529.1557734026468,171.96086150256528,465.24506316201064,127.66468636344209,395.9583748389544,100.7403814666027C334.2173773831606,76.7482773500951,269.4350130405921,84.62216499799875,207.1952322260088,107.2889140133804C132.92018162631612,134.33871894543012,41.79353780512637,160.00259165414826,22.644507872594943,236.69541883565114C3.319112789854554,314.0945973066697,72.72355303640163,379.243833228382,124.04198916343866,440.3218312028393C172.9286146004772,498.5055451809895,224.45579914871206,558.5317968840102,300,566.797414625762"></path>
+              </svg>
+              <i class="bx bx-door-open" style="position: absolute; left: 30px; bottom: 20px;"></i>
+            </div>
+            <h4 class="title"><a href="">Open</a></h4>
+            <p class="description">All the software and smart contracts we develop are open and verifiable by anyone, without the need for our consent. This is how confident we feel about our technology!</p>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section><!-- End Hero -->
 
@@ -78,21 +139,21 @@
 
     <!-- ======= About Section ======= -->
     <section id="about" class="about">
-      <div class="container">
+      <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>About</h2>
-          <h3>Learn More <span>About Us</span></h3>
-          <p></p>
+          <h2>Learn More <span style="color:#2487ce;">About Flocon</span></h2>
         </div>
 
         <div class="row content">
           <div class="col-lg-6">
             <p>
-              Flocon is a transparent digital signature system that ensures <b>provable, auditable and secure</b> document electronic signatures.</p>
-              <p>It relies on an open blockchain technology to store documents data, authenticate signatories and prove signatures. With all these assets, Flocon guarantees the highest level of reliability and transparency on the market.
+              Flocon is a transparent digital signature system that ensures provable, auditable and untamperable document electronic signatures.
             </p>
-            <a href="index.html#tech" class="btn-learn-more">Learn More</a>
+            <p>
+              It relies on an open blockchain technology to store documents data, authenticate signatories and prove signatures. With all these assets, Flocon guarantees the highest level of reliability and transparency on the market.
+            </p>
+            <a href="#" class="btn-learn-more">Learn More</a>
           </div>
           <div class="col-lg-6 pt-4 pt-lg-0">
             <p>
@@ -106,179 +167,108 @@
           </div>
         </div>
 
-        <br>
-
-        <div class="row">
-
-          <div class="col-lg-4 col-md-6">
-            <img src="assets/img/portfolio/AVAX.jpg" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <img src="assets/img/portfolio/Hack.png" class="img-fluid" alt="">
-          </div>
-
-          <div class="col-lg-4 col-md-6">
-            <img src="assets/img/portfolio/AVAX_Hack.png" class="img-fluid" alt="">
-          </div>
-
-        </div>
-
       </div>
     </section><!-- End About Section -->
 
-    <!-- ======= Services Section ======= -->
-    <section id="tech" class="services">
-      <div class="container">
-
-        <div class="section-title">
-          <h2>Technology</h2>
-          <h3>We rely on disruptive <span>Technology</span></h3>
-          <p>Flocon relies on <a href="https://www.avax.network/">Avalanche</a>, an open blockchain that is both reliable, transparent, and independant from us. This cutting-edge technology provides many benefits.</p>
-        </div>
-
-        <div class="row">
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box">
-              <div class="icon"><i class='bx bx-link'></i></div>
-              <h4 class="title"><a href="">Unforgeable</a></h4>
-              <p class="description">We rely on the blockchain for signatories authentication, document information storage and proof-of-signature. All signatures are thus guaranteed unforgeable.</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box">
-              <div class="icon"><i class='bx bx-search-alt'></i></div>
-              <h4 class="title"><a href="">Auditable</a></h4>
-              <p class="description">Avalanche is open and can be audited independantly from us. All signature information is stored as transactions, that can be verified at any time with full transparency.</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box">
-              <div class="icon"><i class='bx bx-shield-quarter' ></i></div>
-              <h4 class="title"><a href="">Secure</a></h4>
-              <p class="description">The distributed and acephalous nature of the blockchain ensures that all information stored in it will remain forever and cannot be altered nor deleted.</p>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
-            <div class="icon-box">
-              <div class="icon"><i class='bx bx-door-open'></i></div>
-              <h4 class="title"><a href="">Open</a></h4>
-              <p class="description">All the software and smart contracts we develop are open and verifiable by anyone, without the need of our consent. Anyone can also propose improvements.</p>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Services Section -->
-
     <!-- ======= Cta Section ======= -->
     <section id="cta" class="cta">
-      <div class="container">
-
-        <div class="text-center">
-          <h3>Subscribe to our newsletter</h3>
-          <p> Get the latest news, features and offers, directly in your mail box. But do not worry, we respect your privacy and your time, and send no more than one mail a month.</p>
-          <form style="align: center;" action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-
+      <div class="container" data-aos="zoom-in">
+        <div class="text-center cta-getcontacted align-items-center">
+          <h3>Ask for a demo</h3>
+          <p> Interester by Flocon? Or just feeling curious about it? Request a demonstration, and our team will contact you back to answer all your questions.</p>
+          <form action="" method="post" style="margin: 0 auto;">
+            <input type="email" name="email" placeholder="Enter your email here"><input type="submit" value="Ask for a demo">
+          </form>
         </div>
-
       </div>
     </section><!-- End Cta Section -->
 
-    <!-- ======= F.A.Q Section ======= -->
-    <section id="faq" class="faq">
-      <div class="container">
+
+    <!-- ======= Frequently Asked Questions Section ======= -->
+    <section id="faq" class="faq section-bg">
+      <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>F.A.Q</h2>
-          <h3>Frequently Asked <span>Questions</span></h3>
+          <h2>Frequently Asked <span style="color:#2487ce;">Questions</span></h2>
+          <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
         </div>
 
-        <ul class="faq-list">
+        <div class="faq-list">
+          <ul>
+            <li data-aos="fade-up">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" class="collapse" data-bs-target="#faq-list-1">What does "full auditability" and "complete transparency" mean concretely? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-1" class="collapse show" data-bs-parent=".faq-list">
+                <p>
+                  Contrary to most other solutions on the market, signed documents and signature information are stored on a public blockchain. This means all signatures can be scanned and audited <b>independently from us</b> by anyone you give your digital ID to.  
+                </p>
+                <p>
+                  We at Flocon do not control or own any of your signtature
+                </p>
+                <p><a href="#" style="padding-left: 0px;">More about auditability...</a></p>
+              </div>
+            </li>
 
-          <li>
-            <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">Non consectetur a erat nam at lectus urna duis? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-            <div id="faq1" class="collapse" data-bs-parent=".faq-list">
-              <p>
-                Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
-              </p>
-            </div>
-          </li>
+            <li data-aos="fade-up" data-aos-delay="100">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-2" class="collapsed">What makes Flocon more secure than others? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-2" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
+                </p>
+                <p><a href="#" style="padding-left: 0px;">More about security...</a></p>
+              </div>
+            </li>
 
-          <li>
-            <div data-bs-toggle="collapse" href="#faq2" class="collapsed question">Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-            <div id="faq2" class="collapse" data-bs-parent=".faq-list">
-              <p>
-                Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-              </p>
-            </div>
-          </li>
+            <li data-aos="fade-up" data-aos-delay="200">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-3" class="collapsed">What is the digital ID that allows Flocon's "proof-of-signature"? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-3" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
+                </p>
+                <p><a href="#" style="padding-left: 0px;">"Proof-of-signature" in details ...</a></p>
+              </div>
+            </li>
 
-          <li>
-            <div data-bs-toggle="collapse" href="#faq3" class="collapsed question">Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-            <div id="faq3" class="collapse" data-bs-parent=".faq-list">
-              <p>
-                Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
-              </p>
-            </div>
-          </li>
+            <li data-aos="fade-up" data-aos-delay="300">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-4" class="collapsed">Tempus quam pellentesque nec nam aliquam sem et tortor consequat? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-4" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in.
+                </p>
+              </div>
+            </li>
 
-          <li>
-            <div data-bs-toggle="collapse" href="#faq4" class="collapsed question">Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-            <div id="faq4" class="collapse" data-bs-parent=".faq-list">
-              <p>
-                Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
-              </p>
-            </div>
-          </li>
+            <li data-aos="fade-up" data-aos-delay="400">
+              <i class="bx bx-help-circle icon-help"></i> <a data-bs-toggle="collapse" data-bs-target="#faq-list-5" class="collapsed">Tortor vitae purus faucibus ornare. Varius vel pharetra vel turpis nunc eget lorem dolor? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-chevron-up icon-close"></i></a>
+              <div id="faq-list-5" class="collapse" data-bs-parent=".faq-list">
+                <p>
+                  Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis tellus in metus vulputate eu scelerisque.
+                </p>
+              </div>
+            </li>
 
-          <li>
-            <div data-bs-toggle="collapse" href="#faq5" class="collapsed question">Tempus quam pellentesque nec nam aliquam sem et tortor consequat? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-            <div id="faq5" class="collapse" data-bs-parent=".faq-list">
-              <p>
-                Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
-              </p>
-            </div>
-          </li>
-
-          <li>
-            <div data-bs-toggle="collapse" href="#faq6" class="collapsed question">Tortor vitae purus faucibus ornare. Varius vel pharetra vel turpis nunc eget lorem dolor? <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-            <div id="faq6" class="collapse" data-bs-parent=".faq-list">
-              <p>
-                Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis tellus in metus vulputate eu scelerisque. Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus. Nibh tellus molestie nunc non blandit massa enim nec.
-              </p>
-            </div>
-          </li>
-
-        </ul>
+          </ul>
+        </div>
 
       </div>
-    </section><!-- End F.A.Q Section -->
+    </section><!-- End Frequently Asked Questions Section -->
 
     <!-- ======= Team Section ======= -->
-    <section id="team" class="team">
-      <div class="container">
+    <section id="team" class="team section-bg">
+      <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Team</h2>
-          <h3>Our Hardworking <span>Team</span></h3>
-          <p>We at Flocon are a team of passionate software developers, that does its best to bring you the best possible service.</p>
+          <h2>Our Hardworking <span style="color:#2487ce;">Team</span></h2>
+          <p>We work every day to bring you the best service</p>
         </div>
 
-        <div class="row">
+        <div class="row justify-content-center">
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
             <div class="member">
               <div class="member-img">
                 <img src="~/img/team/Julien-Beaudaux.jpg" class="img-fluid" alt="">
                 <div class="social">
-                  <a href="https://github.com/JBeaudaux"><i class='bx bxl-github' ></i></a>
+                  <a href="https://github.com/JBeaudaux"><i class="bi bi-github"></i></a>
                   <a href="https://www.linkedin.com/in/jbeaudaux/"><i class="bi bi-linkedin"></i></a>
                 </div>
               </div>
@@ -289,12 +279,12 @@
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
             <div class="member">
               <div class="member-img">
                 <img src="~/img/team/Valentin-Besse.jpg" class="img-fluid" alt="">
                 <div class="social">
-                  <a href="https://github.com/valentinbesse"><i class='bx bxl-github' ></i></a>
+                  <a href="https://github.com/valentinbesse"><i class="bi bi-github"></i></a>
                   <a href="https://www.linkedin.com/in/valentin-besse/"><i class="bi bi-linkedin"></i></a>
                 </div>
               </div>
@@ -312,15 +302,13 @@
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
-      <div class="container">
+      <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>Contact</h2>
-          <h3>Contact <span>Us</span></h3>
+          <h2>Contact <span style="color:#2487ce;">Us</span></h2>
         </div>
 
         <div>
-
           <iframe width="100%" height="270px" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=-14.370117187500002%2C38.30714902947769%2C26.762695312500004%2C57.350215797985626&amp;layer=mapnik&amp;marker=48.71993471159549%2C6.1962890625" style="border: 1px solid black"></iframe>
         </div>
 
@@ -337,13 +325,13 @@
               <div class="email">
                 <i class="bi bi-envelope"></i>
                 <h4>Email:</h4>
-                <p>info@example.com</p>
+                <p>contact@flocon.io</p>
               </div>
 
               <div class="phone">
                 <i class="bi bi-phone"></i>
                 <h4>Call:</h4>
-                <p>+1 5589 55488 55s</p>
+                <p>0123456789</p>
               </div>
 
             </div>
@@ -352,12 +340,12 @@
 
           <div class="col-lg-8 mt-5 mt-lg-0">
 
-            <form asp-controller="Home" asp-action="ContactUs" method="Post">
+            <form asp-controller="Home" asp-action="ContactUs" method="Post" class="php-email-form">
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" asp-for="Name" required>
                 </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
+                <div class="col-md-6 form-group md-3">
                   <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" asp-for="Email" required>
                 </div>
               </div>
@@ -387,29 +375,57 @@
   <!-- ======= Footer ======= -->
   <footer id="footer">
 
+  <!-- ======= Clients Section ======= -->
+    <section id="clients" class="clients section-bg">
+      <div class="container">
+        <h5>Powered by</h5>
+
+        <div class="row justify-content-center">
+
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
+            <a href="https://www.avax.network/"><img src="~/img/clients/avax.png" class="img-fluid" alt=""></a>
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
+            <a href="https://ipfs.io/"><img src="~/img/clients/IPFS-logo2.png" class="img-fluid" alt=""></a>
+          </div>
+
+          <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center" data-aos="zoom-in">
+            <a href="https://moralis.io/"><img src="~/img/clients/moralis.png" class="img-fluid" alt=""></a>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Clients Section -->
+
     <div class="container d-md-flex py-4">
 
       <div class="me-md-auto text-center text-md-start">
         <div class="copyright">
-          &copy; Copyright <strong><span>Flocon.io </span></strong>. All Rights Reserved
+          &copy; Copyright <strong>Flocon<span style="color:#2487ce;">.io</span></strong>. All Rights Reserved
         </div>
       </div>
-      <div class="social-links text-center text-md-right pt-3 pt-md-0">
-        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      <div class="social-links text-center text-md-right pt-3 pt-md-0 pl-3" style="padding-right: 28px;">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="https://www.linkedin.com/company/flocon-io" class="linkedin"><i class="bx bxl-linkedin"></i></a>
       </div>
     </div>
   </footer><!-- End Footer -->
 
+  <div id="preloader"></div>
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
-  <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="~/lib/purecounter/purecounter.js"></script>
+  <script src="~/lib/aos/aos.js"></script>
+  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   <script src="~/lib/glightbox/js/glightbox.min.js"></script>
   <script src="~/lib/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="~/lib/swiper/swiper-bundle.min.js"></script>
 
   <!-- Template Main JS File -->
-  <script src="~/js/landing.js"></script>
+  <script src="~/js/main-landing.js"></script>
 
 </body>
 
