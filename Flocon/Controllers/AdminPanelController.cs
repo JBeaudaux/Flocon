@@ -138,7 +138,18 @@ namespace Flocon.Controllers
 
             //vm.NewCompany.Id = "";
             await _customersService.UpdateAsset(cmpId, company);
-            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = cmpId });
+            return RedirectToAction("Index", "AdminPanel");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DisableLicence(string id)
+        {
+            //vm.NewCompany.Id = "";
+            var cmp = _customersService.GetCompany(id);
+            cmp.LicenceExpiry = DateTime.Now;
+            await _customersService.UpdateAsset(id, cmp);
+
+            return RedirectToAction("Index", "AdminPanel");
         }
 
         [HttpGet]
@@ -149,7 +160,7 @@ namespace Flocon.Controllers
             cmp.LicenceExpiry = DateTime.Now.AddMonths(1);
             await _customersService.UpdateAsset(id, cmp);
 
-            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
+            return RedirectToAction("Index", "AdminPanel");
         }
 
         [HttpGet]
@@ -160,7 +171,7 @@ namespace Flocon.Controllers
             cmp.LicenceExpiry = DateTime.Now.AddMonths(12);
             await _customersService.UpdateAsset(id, cmp);
 
-            return RedirectToAction("CompanyProfile", "AdminPanel", new { id = id });
+            return RedirectToAction("Index", "AdminPanel");
         }
 
         public async Task<IActionResult> CreateGroup(string id, IndexViewModel vm)
@@ -236,7 +247,8 @@ namespace Flocon.Controllers
                 return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
             }
 
-            var nbUsrs = _userManager.Users.ToList().FindAll(x => x.IsActive == true).Count();
+            var test = _userManager.Users.ToList().FindAll(x => x.IsActive == true && x.CompanyId == compyid);
+            var nbUsrs = _userManager.Users.ToList().FindAll(x => x.IsActive == true && x.CompanyId == compyid).Count();
             if (vm.NewUser.IsActive && nbUsrs >= cmpny.MaxUsers)
             {
                 _logger.LogWarning("Failed to update user, too many active users :: CompanyId={0} :: UserId={1}", compyid, usrid);
