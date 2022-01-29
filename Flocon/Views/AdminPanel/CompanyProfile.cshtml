@@ -180,7 +180,7 @@
                                 <td valign="middle">
                                     <form method="post" enctype="multipart/form-data" style="display: flex;"
                                             asp-action="ChangeUserGroup" asp-route-compyid="@usr.CompanyId" asp-route-usrid="@usr.Id">
-                                        <select class="form-control" asp-for="@Model.NewUser.GroupId" onchange="form.submit()">
+                                        <select class="form-select" asp-for="@Model.NewUser.GroupId" onchange="form.submit()">
                                             @foreach (var opt in Model.NewCompany.Groups)
                                             {
                                                 @if (opt == usr.GroupId)
@@ -200,15 +200,17 @@
                                             asp-action="ActivateUser" asp-route-compyid="@usr.CompanyId" asp-route-usrid="@usr.Id">
                                         @if (usr.IsActive)
                                         {
-                                            <label class="switch">
-                                                <input type="checkbox" onchange="form.submit()" checked asp-for="@Model.NewUser.IsActive">
+                                            <label class="form-switch">
+                                                <input type="checkbox" class="form-check-input" onchange="form.submit()" checked
+                                                       asp-for="@Model.NewUser.IsActive">
                                                 <span class="slider round"></span>
                                             </label>
                                         }
                                         else
                                         {
-                                            <label class="switch">
-                                                <input type="checkbox" onchange="form.submit()" asp-for="@Model.NewUser.IsActive">
+                                            <label class="form-switch">
+                                                <input type="checkbox" class="form-check-input" onchange="form.submit()"
+                                                       asp-for="@Model.NewUser.IsActive">
                                                 <span class="slider round"></span>
                                             </label>
                                         }

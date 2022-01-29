@@ -2,7 +2,7 @@
 using Flocon.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+
 
 namespace Flocon.Controllers
 {
@@ -32,6 +32,14 @@ namespace Flocon.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult UploadCraftDoc(DashViewModel vm)
+        {
+            
+            return View("DraftDoc");
         }
     }
 }

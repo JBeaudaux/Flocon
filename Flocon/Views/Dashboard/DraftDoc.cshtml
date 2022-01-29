@@ -1,0 +1,114 @@
+﻿@model Flocon.Models.Dashboard.DashViewModel
+
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "Flocon - Craft a new document";
+}
+
+<div class="pagetitle">
+    <h1>Form Elements</h1>
+    <nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index"><i class="bx bxs-home"></i></a></li>
+        <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+    <div class="col-lg-6">
+
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Crafting parameters</h5>
+            <form>
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Document infos</label>
+                    <div class="col-sm-8">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" value="test.pdf" disabled>
+                        <label>File name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" value="cdsubvufhsdjvfj" disabled>
+                        <label>File hash</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control">
+                        <label>Document name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control">
+                        <label>Document version</label>
+                    </div>
+
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Signatories</label>
+                    <div class="col-sm-8">
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                        <option selected>Select a signatory</option>
+                        <option value="1">Julien Beaudaux (ID: 0xa355E74...3176eE)</option>
+                        <option value="2">Valentin Besse (ID: 0xd8c6fd...d88081)</option>
+                        <option value="3">Test User</option>
+                        </select>
+                        <label for="floatingSelect">Writer</label>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                        <option selected>Select a signatory</option>
+                        <option value="1">Julien Beaudaux (ID: 0xa355E74...3176eE)</option>
+                        <option value="2">Valentin Besse (ID: 0xd8c6fd...d88081)</option>
+                        <option value="3">Test User</option>
+                        </select>
+                        <label for="floatingSelect">Approver</label>
+                    </div>
+
+                    </div>
+                </div>
+
+
+            <div class="row mb-5">
+                <label class="col-sm-4 col-form-label">Parameters</label>
+                <div class="col-sm-8">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Upload original document on IPFS</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                    <label class="form-check-label" for="flexSwitchCheckChecked">Upload document on IPFS once signed</label>
+                </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-around ">
+                <a class="btn btn-secondary" asp-controller="Dashboard" asp-action="Index">Cancel</a>
+                <button type="submit" class="btn btn-primary">Start sign trail</button>
+            </div>
+
+            </form><!-- End General Form Elements -->
+
+
+        </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-6">
+
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Document preview</h5>
+        </div>
+        </div>
+
+    </div>
+    </div>
+</section>

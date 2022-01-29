@@ -20,13 +20,13 @@
 
   <!-- Vendor CSS Files -->
   <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="~/lib/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="~/lib/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="~/lib/remixicon/remixicon.css" rel="stylesheet">
   <link href="~/lib/simple-datatables/style.css" rel="stylesheet">
   
   <!-- Template Main CSS File -->
-  <link href="~/css/style-dashboard.css?rnd=123" rel="stylesheet">
+  <link href="~/css/style-dashboard.css?rnd=125" rel="stylesheet">
   </head>
 
 <body>
@@ -35,20 +35,13 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index-flocon.html" class="logo d-flex align-items-center">
+      <a asp-controller="Home" asp-action="Index" class="logo d-flex align-items-center">
         <span class="d-none d-lg-block"><i class="bi bi-snow2"></i> Flocon<span style="color:#2487ce;">.io</span></span>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li><!-- End Search Icon-->
 
         <li class="nav-item dropdown">
 
@@ -246,16 +239,19 @@
 
   <!-- Vendor JS Files -->
   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="~/lib/bootstrap-icons/bootstrap-icons.js"></script>
   <script src="~/lib/chart.js/chart.min.js"></script>
   <script src="~/lib/echarts/echarts.min.js"></script>
   <script src="~/lib/quill/quill.min.js"></script>
   <script src="~/lib/tinymce/tinymce.min.js"></script>
   <script src="~/lib/simple-datatables/simple-datatables.js"></script>
+  @*<script src="~/lib/dropzone/dropzone.js"></script>*@
 
   @*<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>*@
 
   <!-- Template Main JS File -->
   <script src="~/lib/js/main-dashboard.js"></script>
+  @RenderSection("Scripts", required:false)
 
 </body>
 
