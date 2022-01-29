@@ -1,8 +1,9 @@
 ﻿using AspNetCore.Identity.Mongo.Model;
 using Flocon.Models;
+using Flocon.Models.Dashboard;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-
+using Microsoft.AspNetCore.Mvc;
 
 namespace Flocon.Controllers
 {
@@ -34,11 +35,9 @@ namespace Flocon.Controllers
             return View();
         }
 
-
         [HttpPost]
         public IActionResult UploadCraftDoc(DashViewModel vm)
         {
-            
             return View("DraftDoc");
         }
     }
