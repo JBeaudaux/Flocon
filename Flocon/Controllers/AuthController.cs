@@ -14,8 +14,6 @@ namespace Flocon.Controllers
         private readonly SignInManager<UserFlocon> _signInManager;
         private readonly ILogger<HomeController> _logger;
 
-        private LoginViewModel _loginViewModel;
-
         public AuthController(UserManager<UserFlocon> userManager,
                               RoleManager<MongoRole> roleManager,
                               SignInManager<UserFlocon> signInManager,
@@ -25,50 +23,91 @@ namespace Flocon.Controllers
             _roleManager = roleManager;
             _signInManager = signInManager;
             _logger = logger;
-            _loginViewModel = new LoginViewModel();
         }
 
-        // Role creation
-        /*
-        MongoRole role = new MongoRole();
-        role.Name = "User";
-        IdentityResult roleResult = _roleManager.CreateAsync(role).Result;
-        */
-
-        // User creation
-        /*
-        var myUser = new UserFlocon { UserName="Yojik", Email="julienbeaudaux@gmail.com", EmailConfirmed=true };
-        var resCreate = _userManager.CreateAsync(myUser, "PassWrd@863").Result;
-        var resRole = _userManager.AddToRoleAsync(myUser, "DemoUser").Result;
-        */
+        #region "Web method"
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
+            // If a user is already authenticated, go straight to Dashboard
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Dashboard");
+            }
 
-            return View(_loginViewModel);
+            return View(new LoginViewModel());
         }
 
         [HttpPost]
-        public IActionResult MetamaskLogin()
+        [AllowAnonymous]
+        public IActionResult MetamaskLogin(LoginViewModel vm)
         {
             return RedirectToAction("Index", "Dashboard");
         }
 
-        // Used to capture the login
-        /*[HttpPost]
+        [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel vm)
+        public async Task<IActionResult> UserPasswordLogin(LoginViewModel vm)
         {
-            return RedirectToAction("Login", "Auth");
-        }*/
+            if (string.IsNullOrEmpty(vm.LoginEmail) || string.IsNullOrEmpty(vm.LoginPwd))
+            {
+                return LoginPasswordIncorrect();
+            }
 
-        /*
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var usr = await _userManager.FindByEmailAsync(vm.LoginEmail);
+
+            if (usr == null)
+            {
+                return LoginPasswordIncorrect();
+            }
+            else
+            {
+                //usr.PasswordHash = _userManager.PasswordHasher.HashPassword(usr, vm.LoginPwd);
+
+                var result = await _signInManager.PasswordSignInAsync(usr, vm.LoginPwd, false, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Dashboard");
+                }
+                else
+                {
+                    return LoginPasswordIncorrect();
+                }
+            }
         }
-        */
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Auth", "Login"); // After logout, goes to homepage
+        }
+
+        #endregion "Web method"
+
+        #region "Methods"
+
+        private Boolean CheckPasswordAgainstPolicy()
+        {
+            return false;
+        }
+
+        private ViewResult LoginPasswordIncorrect()
+        {
+            _logger.LogInformation("Login/Password is incorrect.");
+            return View("Login");
+        }
+
+        #endregion "Methods"
     }
 }
