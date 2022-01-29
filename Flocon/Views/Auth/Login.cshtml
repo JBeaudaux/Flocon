@@ -78,11 +78,10 @@
                     <div class="col-12">
                         <form name="form1" asp-controller="Auth" asp-action="MetamaskLogin">
                             <input asp-for="@Model.MetamaskAddr" type="hidden" id="metamID"/>
-                            @*<button id="" type="submit">Test</button>*@
                         </form>
                       
                       <button class="btn btn-primary w-100" type="button" onclick="login()">
-                        <i class="bx bxs-id-card" style="margin-right: 10px;"></i> Digital ID Login
+                        <i class="bx bxs-id-card" style="margin-right: 10px;"></i> MetaMask ID Login 
                       </button>
                     </div>
 
@@ -90,24 +89,25 @@
 
                     <hr>
 
-                 <form class="row g-3 needs-validation" novalidate>
+                 <form class="row g-3 needs-validation" asp-controller="Auth" asp-action="UserPasswordLogin" method="post">
+                     <input type="text" asp-for="@Model.MetamaskAddr" hidden="hidden" />
 
                     <div class="mt-0">
                       <p class="text-center small">Or connect with your username & password</p>
                     </div>
 
                     <div class="col-12 mt-0">
-                      <label for="yourUsername" class="form-label">Username</label>
+                      <label class="form-label">Username</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-at"></i></span>
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
+                        <input asp-for="@Model.LoginEmail" type="email" placeholder="email" class="form-control" required/>
                         <div class="invalid-feedback">Please enter your username.</div>
                       </div>
                     </div>
 
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="passwword" class="form-control" id="yourPassword" required>
+                      <label class="form-label">Password</label>
+                      <input asp-for="@Model.LoginPwd" type="password" placeholder="Password" class="form-control" required />
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
 
