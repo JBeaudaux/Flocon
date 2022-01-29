@@ -4,8 +4,6 @@
     ViewData["Title"] = "Flocon - Login";
 }
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -78,9 +76,9 @@
                   
 
                     <div class="col-12">
-                        <form asp-controller="Auth" asp-action="MetamaskLogin">
-                            <input id="metamID" visibility="hidden" onchange="form.submit()" />
-                            <button type="submit">Test</button>
+                        <form name="form1" asp-controller="Auth" asp-action="MetamaskLogin">
+                            <input asp-for="@Model.MetamaskAddr" type="hidden" id="metamID"/>
+                            @*<button id="" type="submit">Test</button>*@
                         </form>
                       
                       <button class="btn btn-primary w-100" type="button" onclick="login()">
@@ -158,19 +156,25 @@
   <!-- Moralis authentication -->
   <script>
       Moralis.initialize("mZUKiVs4n8XcNZwuq0riiTNAPP29CqdfevSVYYat")
-      Moralis.serverURL = "https://cors-anywhere.herokuapp.com/https://bcyyhqybnajd.usemoralis.com:2053/server"
+      //Moralis.serverURL = "https://cors-anywhere.herokuapp.com/https://bcyyhqybnajd.usemoralis.com:2053/server"
+      Moralis.serverURL = "https://bcyyhqybnajd.usemoralis.com:2053/server"
 
       async function login()
       {
-          console.log("login clicked");
-          var MetamaskAddr = await Moralis.Web3.authenticate();
+          try {
+              //console.log("login clicked");
+              var user = await Moralis.Web3.authenticate();
 
-          var inputH = document.getElementById("metamID");
-          inputH.value = MetamaskAddr;
+              var inputH = document.getElementById("metamID");
+              inputH.value = user.id;
 
-          if(MetamaskAddr){
-              console.log("It works");
-              console.log(MetamaskAddr);
+              if( ! String(inputH.value).length == 0){
+                  //console.log('user connected')
+                  document.form1.action = "/auth/MetamaskLogin";
+                  document.form1.submit();
+              }
+          } catch (error) {
+              console.log('authenticate failed', error)
           }
       }
    </script>

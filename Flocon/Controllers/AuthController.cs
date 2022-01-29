@@ -3,6 +3,7 @@ using Flocon.Models;
 using Flocon.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Flocon.Controllers
 {
@@ -13,6 +14,8 @@ namespace Flocon.Controllers
         private readonly SignInManager<UserFlocon> _signInManager;
         private readonly ILogger<HomeController> _logger;
 
+        private LoginViewModel _loginViewModel;
+
         public AuthController(UserManager<UserFlocon> userManager,
                               RoleManager<MongoRole> roleManager,
                               SignInManager<UserFlocon> signInManager,
@@ -22,6 +25,7 @@ namespace Flocon.Controllers
             _roleManager = roleManager;
             _signInManager = signInManager;
             _logger = logger;
+            _loginViewModel = new LoginViewModel();
         }
 
         // Role creation
@@ -41,22 +45,14 @@ namespace Flocon.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            // If a user is already authenticated, go straight to Dashboard
-            /*if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Dashboard");
-            }*/
 
-            var vm = new LoginViewModel();
-            vm.MetamaskAddr = "";
-
-            return View(vm);
+            return View(_loginViewModel);
         }
 
         [HttpPost]
-        public IActionResult MetamaskLogin(LoginViewModel vm)
+        public IActionResult MetamaskLogin()
         {
-            return View("login");
+            return RedirectToAction("Index", "Dashboard");
         }
 
         // Used to capture the login
@@ -64,10 +60,8 @@ namespace Flocon.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel vm)
         {
-
             return RedirectToAction("Login", "Auth");
         }*/
-
 
         /*
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
