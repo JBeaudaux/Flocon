@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Flocon.Models.Dashboard;
 
 namespace Flocon.Controllers
 {
@@ -14,6 +15,14 @@ namespace Flocon.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult UploadCraftDoc(DashViewModel vm)
+        {
+            
+            return View("DraftDoc");
         }
     }
 }
