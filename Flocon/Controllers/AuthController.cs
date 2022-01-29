@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Flocon.Controllers
 {
+    [Authorize]
     public class AuthController : Controller
     {
         private readonly UserManager<UserFlocon> _userManager;
