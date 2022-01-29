@@ -76,9 +76,9 @@
                   
 
                     <div class="col-12">
-                        <form asp-controller="Auth" asp-action="MetamaskLogin">
-                            <input asp-for="@Model.MetamaskAddr" type="text" id="metamID" onchange="form.submit()" />
-                            <button type="submit">Test</button>
+                        <form name="form1" asp-controller="Auth" asp-action="MetamaskLogin">
+                            <input asp-for="@Model.MetamaskAddr" type="hidden" id="metamID"/>
+                            @*<button id="" type="submit">Test</button>*@
                         </form>
                       
                       <button class="btn btn-primary w-100" type="button" onclick="login()">
@@ -168,8 +168,10 @@
               var inputH = document.getElementById("metamID");
               inputH.value = user.id;
 
-              if(user){
+              if( ! String(inputH.value).length == 0){
                   //console.log('user connected')
+                  document.form1.action = "/auth/MetamaskLogin";
+                  document.form1.submit();
               }
           } catch (error) {
               console.log('authenticate failed', error)
