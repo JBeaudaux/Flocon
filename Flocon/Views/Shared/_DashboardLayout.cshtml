@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model Flocon.Models.UserFlocon;
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -124,12 +126,21 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="~/img/team/Valentin-Besse.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
-          </a><!-- End Profile Iamge Icon -->
+            @{
+                if (User?.Identity?.IsAuthenticated ?? false)
+                {
+                    <span class="d-none d-md-block dropdown-toggle ps-2">@User.Identity.Name</span>
+                }
+            }
+            
+          </a>
+          
+          <!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
+              <li class="dropdown-header">
+              @*<h6>@Model.FirstName @Model.LastName</h6>*@
+              <h6>Put the name here</h6>
               <span>Set role</span>
             </li>
             <li>
@@ -167,10 +178,16 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+                @{
+                    if (User?.Identity?.IsAuthenticated ?? false)
+                    {
+                                      <a class="dropdown-item d-flex align-items-center" asp-controller="Account" asp-action="Logout">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+                <span >Sign Out</span>
               </a>
+                    }
+                }
+
             </li>
 
           </ul><!-- End Profile Dropdown Items -->

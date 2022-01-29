@@ -5,6 +5,7 @@ using Flocon.Models;
 using Flocon.Services.FileManager;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddSingleton<CustomersService>();
 
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 builder.Services.AddTransient<IFileManager, FileManager>();
+builder.Services.AddAuthorization();
 
 // Manage identities
 builder.Services.AddIdentityMongoDbProvider<UserFlocon, MongoRole>(identity =>
@@ -40,8 +42,13 @@ builder.Services.AddIdentityMongoDbProvider<UserFlocon, MongoRole>(identity =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // Cookie settings
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+    options.LoginPath = "/Idendity/Account/Login";
+    options.Cookie.Name = "FloconCookie";
     options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+    options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+    options.SlidingExpiration = true;
 
     // ToDo : Check that
     //options.LoginPath = "/Identity/Account/Login";
@@ -67,13 +74,11 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
     ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 });
 
-app.UseAuthentication();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

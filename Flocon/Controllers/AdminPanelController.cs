@@ -6,10 +6,11 @@ using Flocon.Services.FileManager;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Flocon.Controllers
 {
-    // ToDo : Allow authenticated admins only
+    [Authorize(Roles = "Admin, Owner")]
     public class AdminPanelController : Controller
     {
         private readonly UserManager<UserFlocon> _userManager;
@@ -45,14 +46,12 @@ namespace Flocon.Controllers
             vm.NewCompany = new Company();
 
             var connectedUser = await GetConnectedUser();
-            
 
             return View(vm);
         }
 
         //[HttpGet("/AdminPanel/CompanyProfile/{CmpyId}")]
         [HttpGet]
-
         public IActionResult CompanyProfile(string id)
         {
             var vm = new IndexViewModel();
@@ -82,7 +81,7 @@ namespace Flocon.Controllers
             await _customersService.CreateCompany(cmp);
 
             // Create one super-user wuth contact mail
-            var myUser = new UserFlocon { UserName = vm.NewCompany.CompanyName, Email = vm.NewCompany.ContactMail, CompanyId = vm.NewCompany.Id};
+            var myUser = new UserFlocon { UserName = vm.NewCompany.CompanyName, Email = vm.NewCompany.ContactMail, CompanyId = vm.NewCompany.Id };
             var pwd = GetRandomPassword();
             var resCreate = _userManager.CreateAsync(myUser, pwd).Result;
 
@@ -94,9 +93,8 @@ namespace Flocon.Controllers
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(myUser);
                 await _emailSender.SendRegisterEmailAsync(myUser.Email, "Admin", vm.NewCompany.CompanyName, pwd, "http://flocon.io");
-                // ToDo : Send "real" confirmation link when merged with login
-                // var callbackUrl = Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
-
+                // ToDo : Send "real" confirmation link when merged with login var callbackUrl =
+                // Url.EmailConfirmationLink(user.Id.ToString(), code, Request.Scheme);
             }
             else
             {
@@ -232,7 +230,7 @@ namespace Flocon.Controllers
             {
                 return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
             }
-            
+
             return RedirectToAction("CompanyProfile", "AdminPanel", new { id = compyid });
         }
 
@@ -306,7 +304,9 @@ namespace Flocon.Controllers
         /// <param name="cmpId">ID of the company the user it employed by</param>
         /// <param name="usrName">Full name of the user</param>
         /// <param name="usrMail">Email address of the user</param>
-        /// <param name="usrPass">Password of the account to create. If void, the default password will be assigned</param>
+        /// <param name="usrPass">
+        /// Password of the account to create. If void, the default password will be assigned
+        /// </param>
         /// <param name="usrGroup">The company group to assign the user to</param>
         /// <param name="active">Wether the user should be activated</param>
         /// <returns></returns>
@@ -338,7 +338,7 @@ namespace Flocon.Controllers
                 return false;
             }
 
-            var myUser = new UserFlocon { UserName = usrName, FirstName=firstName, LastName=lastName, Email = usrMail, CompanyId = cmpId};
+            var myUser = new UserFlocon { UserName = usrName, FirstName = firstName, LastName = lastName, Email = usrMail, CompanyId = cmpId };
             if (!string.IsNullOrEmpty(usrGroup))
             {
                 // Assign group
@@ -348,7 +348,7 @@ namespace Flocon.Controllers
                 }
                 else
                 {
-                    _logger.LogWarning("Failed to assign group to user, group not found :: CompanyId={0} :: Name={1} :: Email={2} :: Group={3}", 
+                    _logger.LogWarning("Failed to assign group to user, group not found :: CompanyId={0} :: Name={1} :: Email={2} :: Group={3}",
                                         cmpId, usrName, usrMail, usrGroup);
                     myUser.GroupId = "";
                 }
@@ -391,7 +391,8 @@ namespace Flocon.Controllers
 
         // ToDo : Move to a "common" library
         /// <summary>
-        /// Builds a random password for new users. Has 12 characters (3 upper case letters, 3 lower case letters, 3 digits, and 3 special characters)
+        /// Builds a random password for new users. Has 12 characters (3 upper case letters, 3 lower
+        /// case letters, 3 digits, and 3 special characters)
         /// </summary>
         /// <returns>The randomly generated password</returns>
         public static string GetRandomPassword()
@@ -427,7 +428,7 @@ namespace Flocon.Controllers
 
             string pwdChars = new string(chars);
             string rand = new string(pwdChars.OrderBy(x => Guid.NewGuid()).ToArray());
-            
+
             return rand;
         }
 
