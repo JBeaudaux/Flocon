@@ -3,6 +3,7 @@ using Flocon.Models;
 using Flocon.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Flocon.Controllers
 {
@@ -24,6 +25,7 @@ namespace Flocon.Controllers
             _roleManager = roleManager;
             _signInManager = signInManager;
             _logger = logger;
+            _loginViewModel = new LoginViewModel();
         }
 
         // Role creation
@@ -43,22 +45,13 @@ namespace Flocon.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            // If a user is already authenticated, go straight to Dashboard
-            /*if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Dashboard");
-            }*/
-
-            _loginViewModel = new LoginViewModel();
-            _loginViewModel.MetamaskAddr = "";
 
             return View(_loginViewModel);
         }
 
         [HttpPost]
-        public IActionResult MetamaskLogin(LoginViewModel loginViewModel)
+        public IActionResult MetamaskLogin()
         {
-            //return View("index", "Dashboard");
             return RedirectToAction("Index", "Dashboard");
         }
 
