@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Identity;
 using Flocon.Models.Dashboard;
 using Flocon.Services.FileManager;
 using Flocon.Models;
-using AspNetCore.Identity.Mongo.Model;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Flocon.Controllers
@@ -44,7 +43,6 @@ namespace Flocon.Controllers
         {
             return View();
         }
-
 
         [HttpPost]
         public async Task<IActionResult> UploadCraftDoc(DashViewModel vm)
