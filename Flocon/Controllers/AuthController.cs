@@ -43,9 +43,24 @@ namespace Flocon.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult MetamaskLogin(LoginViewModel vm)
+        public async Task<IActionResult> MetamaskLogin(LoginViewModel vm)
         {
-            return RedirectToAction("Index", "Dashboard");
+            if (string.IsNullOrEmpty(vm.MetamaskAddr))
+            {
+                return LoginPasswordIncorrect();
+            }
+            var usr = _userManager.Users.FirstOrDefault<UserFlocon>(x => x.MetamaskAddr.ToLower() == vm.MetamaskAddr);
+
+            if (usr == null)
+            {
+                return LoginPasswordIncorrect();
+            }
+            else
+            {
+                await _signInManager.SignInAsync(usr, false, null);
+
+                return RedirectToAction("Index", "Dashboard");
+            }
         }
 
         [HttpPost]
@@ -65,8 +80,6 @@ namespace Flocon.Controllers
             }
             else
             {
-                //usr.PasswordHash = _userManager.PasswordHasher.HashPassword(usr, vm.LoginPwd);
-
                 var result = await _signInManager.PasswordSignInAsync(usr, vm.LoginPwd, false, false);
                 if (result.Succeeded)
                 {

@@ -166,15 +166,15 @@
               var user = await Moralis.Web3.authenticate();
 
               var inputH = document.getElementById("metamID");
-              inputH.value = user.id;
-
+              inputH.value = user.get("ethAddress");
+        
               if( ! String(inputH.value).length == 0){
                   //console.log('user connected')
                   document.form1.action = "/auth/MetamaskLogin";
                   document.form1.submit();
               }
           } catch (error) {
-              console.log('authenticate failed', error)
+              console.log('Authentication failed', error)
           }
       }
    </script>
