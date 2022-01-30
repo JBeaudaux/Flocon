@@ -8,7 +8,7 @@ using AspNetCore.Identity.Mongo.Model;
 
 namespace Flocon.Controllers
 {
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User, Superuser")]
     public class DashboardController : Controller
     {
         private readonly UserManager<UserFlocon> _userManager;
@@ -78,11 +78,11 @@ namespace Flocon.Controllers
         [HttpPost]
         public IActionResult CreateSignTrail(DashViewModel vm)
         {
-            if (vm.SignDoc.UploadOriginalIPFS == true)
+            if (vm.SignDoc.UploadOriginalIPFS)
             {
                 // Upload document on IPFS
             }
-            return View("DraftDoc", vm);
+            return View("Index", vm);
         }
     }
 }

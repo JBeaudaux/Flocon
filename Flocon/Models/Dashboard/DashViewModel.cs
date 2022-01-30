@@ -1,4 +1,5 @@
 using AspNetCore.Identity.Mongo.Model;
+using Flocon.Models;
 
 namespace Flocon.Models.Dashboard
 {
@@ -9,5 +10,7 @@ namespace Flocon.Models.Dashboard
         public SignTrail SignDoc { get; set; }
 
         public string PdfPath { get; set; } = string.Empty;
+
+        public UserFlocon? UserFlocon { get; set; }
     }
 }
