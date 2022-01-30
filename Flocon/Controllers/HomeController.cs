@@ -26,6 +26,13 @@ namespace Flocon.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Error(string code)
+        {
+            //var err = new ErrorViewModel();
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> ContactUs(HomeViewModel vm)
         {

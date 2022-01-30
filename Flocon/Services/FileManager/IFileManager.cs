@@ -10,6 +10,8 @@ namespace Flocon.Services.FileManager
     public interface IFileManager
     {
         FileStream ImageStream(string image);
+        FileStream DocumentStream(string doc);
         Task<string> SaveImage(IFormFile image);
+        Task<string> SaveDocument(IFormFile doc);
     }
 }
