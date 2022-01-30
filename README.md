@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/Logo/Flocon-Github-BG.png" alt="Flocon" />
+  <img src="assets/Logo/Flocon-Github-BG_2.png" alt="Flocon" />
 </p>
 
 # Flocon.io - A blockchain-based electronic signature system
