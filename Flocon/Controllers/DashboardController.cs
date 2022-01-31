@@ -42,7 +42,11 @@ namespace Flocon.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var vm = new DashViewModel();
+
+            
+
+            return View(vm);
         }
 
         [HttpPost]
@@ -76,12 +80,21 @@ namespace Flocon.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateSignTrail(DashViewModel vm)
+        public async Task<IActionResult> CreateSignTrail(DashViewModel vm)
         {
             if (vm.SignDoc.UploadOriginalIPFS)
             {
+                //TODO: implement real workflow
+                // Here it is only for POC purpose.
+
+                vm.SignDoc.OriginalIPFS = "https://ipfs.io/ipfs/QmZ7AGMDttCJX1jKeyAyzzJRuZZ5WTAuxFyimCzurzLjMY";
                 // Upload document on IPFS
             }
+
+            await _customersService.CreateSignTrail(vm.SignDoc);
+
+            vm.UserDocuments = _customersService.GetSignTrailsList();
+
             return View("Index", vm);
         }
     }

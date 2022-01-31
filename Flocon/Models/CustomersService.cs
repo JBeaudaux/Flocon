@@ -13,7 +13,7 @@ namespace Flocon.Models
             var database = client.GetDatabase(settings.DatabaseName);
 
             _companies = database.GetCollection<Company>(settings.CompaniesCollectionName);
-            _signTrails = database.GetCollection<SignTrail>(settings.CompaniesCollectionName);
+            _signTrails = database.GetCollection<SignTrail>(settings.SignTrailsCollectionName);
         }
 
         public List<Company> GetCompaniesList()
@@ -75,7 +75,7 @@ namespace Flocon.Models
 
         public List<SignTrail> GetUsrPendingDocs(string usrAddr)
         {
-            var s1 = _signTrails.Find(st => st.SignWriterId==usrAddr && string.IsNullOrEmpty(st.SignWriterTx)).ToList();
+            var s1 = _signTrails.Find(st => st.SignWriterId == usrAddr && string.IsNullOrEmpty(st.SignWriterTx)).ToList();
             var s2 = _signTrails.Find(st => st.SignApproverId == usrAddr && string.IsNullOrEmpty(st.SignApproverTx)).ToList();
             return s1.Concat(s2).ToList();
         }

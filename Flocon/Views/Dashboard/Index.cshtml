@@ -107,56 +107,75 @@
                         <th scope="col">Creator</th>
                         <th scope="col">Signatories</th>
                         <th scope="col">Status</th>
+                        <th scope="col">Original Document</th>
                       </tr>
                     </thead>
                     <tbody>
+                            @foreach(var i in Model.UserDocuments)
+                            {
+                                        <tr>
+                                    <th scope="row"><a href="#">#2988</a></th>
+                        <td><a href="#" class="text-primary">@i.DocName</a></td>
+                        <td>v @i.DocVersion</td>
+                        <td><a href="#" class="text-primary">V. Besse</a></td>
+                        <td><a href="#" class="text-primary">J. Beaudaux</a> ; <a href="#" class="text-primary">V. Besse</a></td>
+                        <td><span class="badge bg-primary"> <i class="bi bi-pause-fill"></i> Crafted</span></td>
+                        <td><a href="@i.OriginalIPFS" class="text-primary">Link</a></td>  
+                    </tr>
+                            }
                       <tr>
-                        <th scope="row"><a href="#">#2457</a></th>
+                                    <th scope="row"><a href="#">#2457</a></th>
                         <td><a href="#" class="text-primary">Quality manual</a></td>
-                        <td>v2.0</td>
+                        <td>v2</td>
                         <td><a href="#" class="text-primary">J. Beaudaux</a></td>
                         <td><a href="#" class="text-primary">J. Beaudaux</a> ; <a href="#" class="text-primary">V. Besse</a></td>
                         <td><span class="badge bg-primary"> <i class="bi bi-pause-fill"></i> Crafted</span></td>
-                      </tr>
+                    <td><a href="#" class="text-primary">Link</a></td>  
+                    </tr>
                       <tr>
                         <th scope="row"><a href="#">#2457</a></th>
                         <td><a href="#" class="text-primary">Sales process sheet</a></td>
-                        <td>v1.0</td>
+                        <td>v1</td>
                         <td><a href="#" class="text-primary">V. Besse</a></td>
                         <td><a href="#" class="text-primary">V. Besse</a> ; <a href="#" class="text-primary">J. Beaudaux</a></td>
                         <td><span class="badge bg-success"><i class="bi bi-award-fill"></i> Approved</span></td>
-                      </tr>
+                    <td><a href="#" class="text-primary">Link</a></td>  
+                    </tr>
                       <tr>
                         <th scope="row"><a href="#">#2147</a></th>
                         <td><a href="#" class="text-primary">IT process sheet</a></td>
-                        <td>v1.0</td>
+                        <td>v1</td>
                         <td><a href="#" class="text-primary">V. Besse</a></td>
                         <td><a href="#" class="text-primary">V. Besse</a> ; <a href="#" class="text-primary">J. Beaudaux</a></td>
                         <td><span class="badge bg-warning"><i class="bi bi-play-fill"></i> Pending</span></td>
-                      </tr>
+                    <td><a href="#" class="text-primary">Link</a></td> 
+                    </tr>
                       <tr>
                         <th scope="row"><a href="#">#2049</a></th>
                         <td><a href="#" class="text-primary">R&D process sheet</a></td>
-                        <td>v1.0</td>
+                        <td>v1</td>
                         <td><a href="#" class="text-primary">V. Besse</a></td>
                         <td><a href="#" class="text-primary">V. Besse</a> ; <a href="#" class="text-primary">J. Beaudaux</a></td>
                         <td><span class="badge bg-success"><i class="bi bi-award-fill"></i> Approved</span></td>
-                      </tr>
+                    <td><a href="#" class="text-primary">Link</a></td> 
+                    </tr>
                       <tr>
                         <th scope="row"><a href="#">#2644</a></th>
                         <td><a href="#" class="text-primary">Marketing process sheet</a></td>
-                        <td>v1.0</td>
+                        <td>v1</td>
                         <td><a href="#" class="text-primary">V. Besse</a></td>
                         <td><a href="#" class="text-primary">V. Besse</a> ; <a href="#" class="text-primary">J. Beaudaux</a></td>
                         <td><span class="badge bg-danger"> <i class="bi bi-exclamation-triangle-fill"></i> Rejected</span></td>
-                      </tr>
+                    <td><a href="#" class="text-primary">Link</a></td>  
+                    </tr>
                       <tr>
                         <th scope="row"><a href="#">#2644</a></th>
                         <td><a href="#" class="text-primary">Test process sheet</a></td>
-                        <td>v1.0</td>
+                        <td>v1</td>
                         <td><a href="#" class="text-primary">V. Besse</a></td>
                         <td><a href="#" class="text-primary">V. Besse</a> ; <a href="#" class="text-primary">J. Beaudaux</a></td>
                         <td><span class="badge bg-success"><i class="bi bi-award-fill"></i> Approved</span></td>
+                        <td><a href="#" class="text-primary">Link</a></td>
                       </tr>
                     </tbody>
                   </table>
