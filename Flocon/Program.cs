@@ -19,6 +19,8 @@ builder.Services.AddSingleton<CustomersService>();
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
 builder.Services.AddTransient<IFileManager, FileManager>();
 builder.Services.AddAuthorization();
+builder.WebHost.UseWebRoot("wwwroot");
+builder.WebHost.UseStaticWebAssets();
 
 // Manage identities
 builder.Services.AddIdentityMongoDbProvider<UserFlocon, MongoRole>(identity =>
